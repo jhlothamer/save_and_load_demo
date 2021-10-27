@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/godot_tool_box/core/2d/interaction/interactable_area_2d.gd" type="Script" id=1]
+
+[node name="interactableArea" type="Area2D" groups=[
+"interactable",
+]]
+script = ExtResource( 1 )

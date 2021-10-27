@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/rooms/room.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/environment/key.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/rooms/room_south.gd" type="Script" id=3]
+[ext_resource path="res://scenes/environment/floor_switch.tscn" type="PackedScene" id=4]
+
+[node name="RoomSouth" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="NorthRoomExit" parent="." index="2"]
+collision_layer = 6
+collision_mask = 6
+destination_level_scene = "res://scenes/rooms/room_main.tscn"
+
+[node name="SouthRoomExit" parent="." index="3"]
+visible = false
+enabled = false
+
+[node name="room_exit" parent="SouthRoomExit" index="0"]
+visible = false
+
+[node name="EastRoomExit" parent="." index="4"]
+visible = false
+enabled = false
+
+[node name="room_exit" parent="EastRoomExit" index="0"]
+visible = false
+
+[node name="WestRoomExit" parent="." index="5"]
+visible = false
+enabled = false
+
+[node name="room_exit" parent="WestRoomExit" index="0"]
+visible = false
+
+[node name="Info" parent="YSort" index="0"]
+position = Vector2( 657.655, 127.5 )
+bb_code_info_msg = "This room demonstrates picking up an item and putting into the inventory.  The items removal from the room is persisted as well as the items in the inventory.  The state of the floor switch is also persisted but itself has no affect on other scenes."
+
+[node name="Key" parent="YSort" index="2" instance=ExtResource( 2 )]
+position = Vector2( 317.121, -100 )
+
+[node name="ReleaseKeyFloorSwitch" parent="YSort" index="3" instance=ExtResource( 4 )]
+position = Vector2( 747.51, 365 )
+trigger_id = "key_release"
+
+[node name="KeyEndPosition" type="Position2D" parent="." index="8"]
+position = Vector2( 317.121, 340 )
+
+[node name="Tween" type="Tween" parent="." index="9"]
+
+[editable path="NorthRoomExit"]
+[editable path="SouthRoomExit"]
+[editable path="EastRoomExit"]
+[editable path="WestRoomExit"]

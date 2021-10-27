@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/rooms/room.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/environment/floor_switch.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/environment/floor_trigger.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/rooms/room_west.gd" type="Script" id=4]
+
+[node name="RoomWest" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+
+[node name="NorthRoomExit" parent="." index="2"]
+visible = false
+enabled = false
+
+[node name="room_exit" parent="NorthRoomExit" index="0"]
+visible = false
+
+[node name="SouthRoomExit" parent="." index="3"]
+visible = false
+enabled = false
+
+[node name="room_exit" parent="SouthRoomExit" index="0"]
+visible = false
+
+[node name="EastRoomExit" parent="." index="4"]
+collision_layer = 6
+collision_mask = 6
+destination_level_scene = "res://scenes/rooms/room_main.tscn"
+
+[node name="WestRoomExit" parent="." index="5"]
+visible = false
+enabled = false
+
+[node name="room_exit" parent="WestRoomExit" index="0"]
+visible = false
+
+[node name="Info" parent="YSort" index="0"]
+position = Vector2( 833.389, 188.261 )
+bb_code_info_msg = "This room demonstrates that dynamically instanced scenes (the bouncers) will be persisted into the game state and re-instanced when this scene is loaded again.  Use the green floor button to add bouncers and the red button to remove them.  The floor switch at the far end of the room also affects something in the main room."
+
+[node name="FloorSwitch" parent="YSort" index="2" instance=ExtResource( 2 )]
+position = Vector2( 275.642, 394 )
+trigger_id = "west_trigger"
+
+[node name="AddBouncerFloorTrigger" parent="YSort" index="3" instance=ExtResource( 3 )]
+modulate = Color( 0.0431373, 0.666667, 0, 1 )
+position = Vector2( 809.389, 394 )
+
+[node name="RemoveBouncerFloorTrigger" parent="YSort" index="4" instance=ExtResource( 3 )]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 717.415, 394 )
+
+[node name="Bouncers" type="YSort" parent="YSort" index="5"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="8"]
+
+[node name="SpawnMarginContainer" type="MarginContainer" parent="CanvasLayer" index="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 160
+custom_constants/margin_top = 160
+custom_constants/margin_left = 160
+custom_constants/margin_bottom = 160
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpawnAreaReferenceRect" type="ReferenceRect" parent="CanvasLayer/SpawnMarginContainer" index="0"]
+margin_left = 160.0
+margin_top = 160.0
+margin_right = 864.0
+margin_bottom = 440.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[editable path="NorthRoomExit"]
+[editable path="SouthRoomExit"]
+[editable path="EastRoomExit"]
+[editable path="WestRoomExit"]

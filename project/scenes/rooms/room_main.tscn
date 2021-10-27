@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/environment/ball_pedistal.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/rooms/room.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/rooms/room_main.gd" type="Script" id=3]
+
+[node name="RoomMain" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+
+[node name="NorthRoomExit" parent="." index="2"]
+collision_layer = 3
+locked = true
+destination_level_scene = "res://scenes/rooms/room_north.tscn"
+
+[node name="door" parent="NorthRoomExit/room_exit" index="1"]
+visible = true
+
+[node name="SouthRoomExit" parent="." index="3"]
+collision_layer = 6
+collision_mask = 6
+destination_level_scene = "res://scenes/rooms/room_south.tscn"
+
+[node name="EastRoomExit" parent="." index="4"]
+collision_layer = 6
+collision_mask = 6
+destination_level_scene = "res://scenes/rooms/room_east.tscn"
+
+[node name="WestRoomExit" parent="." index="5"]
+position = Vector2( 128, 301 )
+collision_layer = 6
+collision_mask = 6
+destination_level_scene = "res://scenes/rooms/room_west.tscn"
+
+[node name="Info" parent="YSort" index="0"]
+bb_code_info_msg = "In this room you need to do 3 things to open the door.  All of these are done in the adjacent rooms.  This demonstrates that game state saved from the other scenes has an affect on this scene."
+
+[node name="WestBallPedistal" parent="YSort" index="2" instance=ExtResource( 1 )]
+position = Vector2( 412.505, 160.98 )
+trigger_id = "west_trigger"
+
+[node name="EastBallPedistal" parent="YSort" index="3" instance=ExtResource( 1 )]
+position = Vector2( 610.619, 160.98 )
+trigger_id = "east_trigger"
+
+[editable path="NorthRoomExit"]
+[editable path="SouthRoomExit"]
+[editable path="EastRoomExit"]
+[editable path="WestRoomExit"]

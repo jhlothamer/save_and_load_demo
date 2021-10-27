@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/ui/raw_game_state_dlg.gd" type="Script" id=1]
+
+[node name="RawGameStateDlg" type="AcceptDialog"]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -414.5
+margin_top = -246.5
+margin_right = 414.5
+margin_bottom = 246.5
+popup_exclusive = true
+window_title = "Raw Game State (read only)"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 40
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 803.0
+margin_bottom = 409.0
+fold_gutter = true
+context_menu_enabled = false
+shortcut_keys_enabled = false
+virtual_keyboard_enabled = false
+
+[connection signal="confirmed" from="." to="." method="_on_RawGameStateDlg_confirmed"]
+[connection signal="custom_action" from="." to="." method="_on_RawGameStateDlg_custom_action"]

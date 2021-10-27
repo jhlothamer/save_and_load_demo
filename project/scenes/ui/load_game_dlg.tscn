@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/themes/dialog_theme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/ui/load_game_dlg.gd" type="Script" id=2]
+
+[node name="LoadGameDlg" type="ConfirmationDialog"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -378.5
+margin_top = -253.5
+margin_right = 378.5
+margin_bottom = 253.5
+theme = ExtResource( 1 )
+window_title = "Load Game"
+script = ExtResource( 2 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 747.0
+margin_bottom = 467.0
+custom_constants/separation = 10
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/HBoxContainer"]
+margin_right = 363.0
+margin_bottom = 457.0
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+margin_left = 373.0
+margin_right = 737.0
+margin_bottom = 457.0
+size_flags_horizontal = 3
+stretch_mode = 6
+
+[connection signal="confirmed" from="." to="." method="_on_LoadGameDlg_confirmed"]
+[connection signal="item_selected" from="MarginContainer/HBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]

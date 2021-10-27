@@ -1,0 +1,74 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/images/environment/switch_left.png" type="Texture" id=1]
+[ext_resource path="res://assets/images/environment/switch_right.png" type="Texture" id=2]
+[ext_resource path="res://scenes/components/interaction/interactable_area_2d.gd" type="Script" id=3]
+[ext_resource path="res://scenes/environment/floor_switch.gd" type="Script" id=4]
+[ext_resource path="res://assets/images/environment/switch_left_interaction_indicator.png" type="Texture" id=5]
+[ext_resource path="res://assets/images/environment/switch_right_interaction_indicator.png" type="Texture" id=6]
+[ext_resource path="res://utils/game_state/game_state_helper.gd" type="Script" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "switched",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "switched",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 31.1212, 28.2182 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 15.7705, 5.8597 )
+
+[node name="FloorSwitch" type="AnimatedSprite"]
+frames = SubResource( 1 )
+offset = Vector2( 0, -14 )
+script = ExtResource( 4 )
+
+[node name="InteractionIndicator" type="AnimatedSprite" parent="."]
+show_behind_parent = true
+position = Vector2( 0, -1 )
+frames = SubResource( 3 )
+offset = Vector2( 0, -14 )
+
+[node name="InteractableArea2D" type="Area2D" parent="."]
+position = Vector2( 0, -14 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea2D"]
+shape = SubResource( 2 )
+
+[node name="GameStateHelper" type="Node" parent="."]
+script = ExtResource( 7 )
+global = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 1.50169, 2.00226 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 4 )
+
+[connection signal="InteractionIndicatorStateChanged" from="InteractableArea2D" to="." method="_on_InteractableArea2D_InteractionIndicatorStateChanged"]
+[connection signal="InteractionStarted" from="InteractableArea2D" to="." method="_on_InteractableArea2D_InteractionStarted"]
+[connection signal="loading_data" from="GameStateHelper" to="." method="_on_GameStateHelper_loading_data"]
+[connection signal="saving_data" from="GameStateHelper" to="." method="_on_GameStateHelper_saving_data"]
