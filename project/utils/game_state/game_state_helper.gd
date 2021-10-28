@@ -4,6 +4,9 @@ tool
 
 signal loading_data(data)
 signal saving_data(data)
+# signal to let service know that a instanced child scene was freed
+signal instanced_child_scene_freed(save_freeds_instanced_child_scene_object)
+
 
 # node group for helper nodes
 const NODE_GROUP = "GameStateHelper"
@@ -15,8 +18,6 @@ const GAME_STATE_KEY_INSTANCE_SCENE = "game_state_helper_dynamic_recreate_scene"
 const GAME_STATE_KEY_PARENT_FREED = "game_state_helper_parent_freed"
 
 
-# signal to let service know that a instanced child scene was freed
-signal instanced_child_scene_freed(save_freeds_instanced_child_scene_object)
 
 
 """
