@@ -2,6 +2,7 @@ class_name RoomExit
 extends StaticBody2D
 tool
 
+
 signal room_exit_triggered()
 signal locked_room_exit_interacted_with(room_exit)
 
@@ -22,16 +23,12 @@ func _set_enabled(value: bool) -> void:
 	enabled = value
 	if _room_exit:
 		_room_exit.visible = value
-#	if _collision_shape:
-#		#_collision_shape.disabled = value
-#		set_collision_layer_bit(0, !value)
-#		set_collision_mask_bit(0, !value)
+
 
 func _set_locked(value: bool) -> void:
 	locked = value
 	if _door:
 		_door.visible = value
-		#_collision_shape.disabled = !value
 		set_collision_layer_bit(0, value)
 		set_collision_mask_bit(0, value)
 
@@ -47,6 +44,9 @@ func _ready():
 		set_collision_mask_bit(0, false)
 
 
+func get_player_enter_position() -> Vector2:
+	return _player_enter_position.global_position
+
 
 func _on_ExitDetectArea_body_entered(body):
 	if !body is Player:
@@ -57,10 +57,6 @@ func _on_ExitDetectArea_body_entered(body):
 	#keep player from moving any further during transition
 	body.disabled = true
 	TransitionMgr.transition_to(destination_level_scene)
-
-
-func get_player_enter_position() -> Vector2:
-	return _player_enter_position.global_position
 
 
 func _on_InteractableArea2D_InteractionIndicatorStateChanged(interactable, indicator_visible):

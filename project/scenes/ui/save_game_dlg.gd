@@ -5,7 +5,9 @@ const SAVE_GAME_FOLDER = "user://saved_games"
 
 onready var _texture_rect: TextureRect = $MarginContainer/VBoxContainer/TextureRect
 
+
 var _save_game_image: Image
+
 
 func _ready():
 	pass # Replace with function body.
@@ -17,6 +19,7 @@ func show_save_dlg(save_img: Image) -> void:
 	texture.create_from_image(save_img)
 	_texture_rect.texture = texture
 	show_modal(true)
+
 
 func _get_date_time_string():
 	# year, month, day, weekday, dst (daylight savings time), hour, minute, second.

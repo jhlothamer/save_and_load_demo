@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/images/white_box_32x32.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ui/pause_dialog.gd" type="Script" id=2]
 [ext_resource path="res://assets/fonts/CooperHewitt-Medium.otf" type="DynamicFontData" id=3]
-[ext_resource path="res://scenes/ui/save_game.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ui/save_game_dlg.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/ui/load_game_dlg.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=1]

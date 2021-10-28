@@ -1,9 +1,12 @@
 extends StaticBody2D
 
+
 export var trigger_id := ""
 export var triggered_color := Color.white
 
+
 var triggered := false
+
 
 onready var _ball: Sprite = $ball
 

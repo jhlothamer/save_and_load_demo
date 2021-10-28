@@ -48,10 +48,6 @@ func _on_ItemList_item_selected(index):
 	_texture_rect.texture = texture
 
 
-
-
-
-
 func _on_LoadGameDlg_confirmed():
 	var selected = _item_list.get_selected_items()
 	if selected:

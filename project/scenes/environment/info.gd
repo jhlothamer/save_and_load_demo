@@ -13,7 +13,6 @@ func _ready():
 	_interact_indicator.visible = false
 
 
-
 func _on_InteractableArea2D_InteractionIndicatorStateChanged(interactable, indicator_visible):
 	_interact_indicator.visible = indicator_visible
 

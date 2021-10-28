@@ -2,7 +2,7 @@ class_name Player
 extends KinematicBody2D
 
 
-export var speed := 200.0
+export var speed := 300.0
 
 onready var _animated_sprite: AnimatedSprite = $AnimatedSprite
 onready var _interaction_area: InteractionArea2D = $InteractionArea2D
@@ -22,6 +22,7 @@ func _set_facing_direction(value: Vector2) -> void:
 		_animated_sprite.play("left")
 	elif value == Vector2.RIGHT:
 		_animated_sprite.play("right")
+
 
 func _physics_process(_delta):
 	if disabled:
@@ -49,6 +50,7 @@ func _get_move_vector() -> Vector2:
 		v.x -= 1
 	
 	return v
+
 
 func _handle_interaction():
 	if !Input.is_action_just_pressed("interact"):

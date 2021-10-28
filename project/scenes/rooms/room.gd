@@ -18,12 +18,13 @@ var _player_face_direction := {
 	"West": Vector2.RIGHT,
 }
 
+
 onready var _player: Player = $YSort/Player
 onready var _hud: Hud = $Hud
 
 
-
 func _ready():
+	# wait for game state load to finish
 	yield(GameStateService, "state_load_completed")
 	
 	var enter_room_from_direction = GameStateService.get_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY)

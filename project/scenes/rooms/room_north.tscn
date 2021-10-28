@@ -11,26 +11,26 @@ font_data = ExtResource( 2 )
 
 [node name="NorthRoomExit" parent="." index="2"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
 [node name="SouthRoomExit" parent="." index="3"]
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room_main.tscn"
 
 [node name="EastRoomExit" parent="." index="4"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
 [node name="WestRoomExit" parent="." index="5"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
-[node name="Info" parent="YSort" index="0"]
-position = Vector2( 358.065, 394 )
-bb_code_info_msg = "Congrats!  Now you see that persisting game state across scenes as demonstrated here opens up a lot of possibilities for your games."
-
-[node name="Label" type="Label" parent="." index="7"]
+[node name="Label" type="Label" parent="." index="6"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 387.0
@@ -47,3 +47,7 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Info" parent="YSort" index="0"]
+position = Vector2( 358.065, 394 )
+bb_code_info_msg = "Congrats!  Now you see that persisting game state across scenes as demonstrated here opens up a lot of possibilities for your games."

@@ -1,6 +1,7 @@
 class_name Hud
 extends CanvasLayer
 
+
 onready var _info_dlg: AcceptDialog = $InfoDialog
 onready var _game_state_dlg: AcceptDialog = $RawGameStateDlg
 onready var _msg_label: Label = $MessageLabel

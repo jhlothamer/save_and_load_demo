@@ -6,6 +6,7 @@ onready var _key = $YSort/Key
 onready var _key_end_pos: Position2D = $KeyEndPosition
 onready var _tween: Tween = $Tween
 
+
 func _ready():
 	_release_key_switch.connect("switch_state_changed", self, "_on_ReleaseKeyFloorSwitch_switch_state_changed")
 

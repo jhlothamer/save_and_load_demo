@@ -14,8 +14,8 @@ func _how_many_things_needed_to_unlock() -> int:
 	if !InventoryMgr.has_item(InventoryMgr.InventoryItems.KEY):
 		count += 1
 	
-	
 	return count
+
 
 func _on_NorthRoomExit_locked_room_exit_interacted_with(room_exit):
 	var things_needed_count = _how_many_things_needed_to_unlock()

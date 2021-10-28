@@ -9,6 +9,7 @@ script = ExtResource( 3 )
 
 [node name="NorthRoomExit" parent="." index="2"]
 collision_layer = 3
+collision_mask = 7
 locked = true
 destination_level_scene = "res://scenes/rooms/room_north.tscn"
 
@@ -16,19 +17,13 @@ destination_level_scene = "res://scenes/rooms/room_north.tscn"
 visible = true
 
 [node name="SouthRoomExit" parent="." index="3"]
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room_south.tscn"
 
 [node name="EastRoomExit" parent="." index="4"]
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room_east.tscn"
 
 [node name="WestRoomExit" parent="." index="5"]
 position = Vector2( 128, 301 )
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room_west.tscn"
 
 [node name="Info" parent="YSort" index="0"]

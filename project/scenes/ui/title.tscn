@@ -4,23 +4,23 @@
 [ext_resource path="res://scenes/ui/title.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ui/load_game_dlg.tscn" type="PackedScene" id=3]
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.00612245, 0.995918 )
 colors = PoolColorArray( 0, 0.34375, 0.335693, 1, 0, 0.042, 0.12, 1 )
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 width = 600
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=3]
 size = 100
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=4]
 size = 40
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=5]
 size = 48
 font_data = ExtResource( 1 )
 
@@ -39,7 +39,7 @@ margin_left = 1024.0
 margin_right = 600.0
 margin_bottom = 424.0
 rect_rotation = 90.0
-texture = SubResource( 5 )
+texture = SubResource( 2 )
 stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -61,7 +61,7 @@ margin_left = 20.0
 margin_top = 60.0
 margin_right = 936.0
 margin_bottom = 160.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "Save and Load Demo"
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
@@ -82,7 +82,7 @@ margin_left = 20.0
 margin_top = 20.0
 margin_right = 617.0
 margin_bottom = 404.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "This is a demonstration of saving game state in several situations.  These include:
 - at the time of changing scenes
 - saving dynamically instanced components
@@ -116,7 +116,7 @@ custom_constants/separation = 20
 margin_right = 246.0
 margin_bottom = 54.0
 focus_mode = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color_hover = Color( 0.992157, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0, 1, 1 )
 custom_constants/hseparation = 10
@@ -128,7 +128,7 @@ margin_top = 74.0
 margin_right = 246.0
 margin_bottom = 128.0
 focus_mode = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color_hover = Color( 0.992157, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0, 1, 1 )
 custom_constants/hseparation = 10
@@ -140,7 +140,7 @@ margin_top = 148.0
 margin_right = 246.0
 margin_bottom = 202.0
 focus_mode = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color_hover = Color( 0.992157, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0, 1, 1 )
 custom_constants/hseparation = 10

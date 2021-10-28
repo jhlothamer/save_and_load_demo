@@ -25,6 +25,8 @@ script = ExtResource( 6 )
 
 [node name="NorthRoomExit" parent="." index="2"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
 [node name="room_exit" parent="NorthRoomExit" index="0"]
@@ -32,6 +34,8 @@ visible = false
 
 [node name="SouthRoomExit" parent="." index="3"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
 [node name="room_exit" parent="SouthRoomExit" index="0"]
@@ -39,14 +43,14 @@ visible = false
 
 [node name="EastRoomExit" parent="." index="4"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
 [node name="room_exit" parent="EastRoomExit" index="0"]
 visible = false
 
 [node name="WestRoomExit" parent="." index="5"]
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room_main.tscn"
 
 [node name="Info" parent="YSort" index="0"]
@@ -66,6 +70,8 @@ trigger_id = "remove_barrier"
 
 [node name="LowWall" parent="." index="8" instance=ExtResource( 5 )]
 position = Vector2( 512, 300.185 )
+
+[connection signal="switch_state_changed" from="YSort/RemoveBarrierFloorSwitch" to="." method="_on_RemoveBarrierFloorSwitch_switch_state_changed"]
 
 [editable path="NorthRoomExit"]
 [editable path="SouthRoomExit"]
