@@ -27,7 +27,7 @@ func _ready():
 	# wait for game state load to finish
 	yield(GameStateService, "state_load_completed")
 	
-	var enter_room_from_direction = GameStateService.get_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY)
+	var enter_room_from_direction = GameStateService.get_global_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY)
 	if !enter_room_from_direction:
 		return
 	
@@ -38,23 +38,23 @@ func _ready():
 	_player.face_direction(_player_face_direction[enter_room_from_direction])
 	
 	#clear the enter direction - this way loading a save file will keep player in their saved position
-	GameStateService.set_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, null)
+	GameStateService.set_global_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, null)
 
 
 func _on_NorthRoomExit_room_exit_triggered():
-	GameStateService.set_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, "South")
+	GameStateService.set_global_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, "South")
 
 
 func _on_SouthRoomExit_room_exit_triggered():
-	GameStateService.set_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, "North")
+	GameStateService.set_global_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, "North")
 
 
 func _on_EastRoomExit_room_exit_triggered():
-	GameStateService.set_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, "West")
+	GameStateService.set_global_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, "West")
 
 
 func _on_WestRoomExit_room_exit_triggered():
-	GameStateService.set_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, "East")
+	GameStateService.set_global_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY, "East")
 
 
 func _on_Info_info_requested(info_msg):

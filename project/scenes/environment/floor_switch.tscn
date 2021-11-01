@@ -21,7 +21,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
@@ -34,7 +34,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 31.1212, 28.2182 )
 
 [sub_resource type="RectangleShape2D" id=4]
@@ -48,7 +48,7 @@ script = ExtResource( 4 )
 [node name="InteractionIndicator" type="AnimatedSprite" parent="."]
 show_behind_parent = true
 position = Vector2( 0, -1 )
-frames = SubResource( 3 )
+frames = SubResource( 2 )
 offset = Vector2( 0, -14 )
 
 [node name="InteractableArea2D" type="Area2D" parent="."]
@@ -56,7 +56,7 @@ position = Vector2( 0, -14 )
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea2D"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource( 7 )

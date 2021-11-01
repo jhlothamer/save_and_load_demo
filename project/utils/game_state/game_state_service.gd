@@ -62,7 +62,7 @@ func get_game_state_string() -> String:
 """
 Gets a value from the global game state.
 """
-func get_state_value(key: String):
+func get_global_state_value(key: String):
 	var global_state = _game_state["global"]
 	if global_state.has(key):
 		return global_state[key]
@@ -131,7 +131,7 @@ func save(path: String) -> bool:
 """
 Sets a value from the global game state.
 """
-func set_state_value(key: String, value) -> void:
+func set_global_state_value(key: String, value) -> void:
 	var global_state = _game_state["global"]
 	global_state[key] = value
 

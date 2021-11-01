@@ -25,5 +25,6 @@ texture = ExtResource( 1 )
 
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource( 3 )
+global = true
 
 [connection signal="loading_data" from="GameStateHelper" to="." method="_on_GameStateHelper_loading_data"]

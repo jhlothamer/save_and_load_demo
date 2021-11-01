@@ -17,8 +17,8 @@ extents = Vector2( 83.0974, 21.1406 )
 extents = Vector2( 50, 50 )
 
 [node name="RoomExit" type="StaticBody2D"]
-collision_layer = 7
-collision_mask = 7
+collision_layer = 6
+collision_mask = 6
 script = ExtResource( 3 )
 
 [node name="room_exit" type="Sprite" parent="."]
@@ -51,7 +51,7 @@ position = Vector2( 0, 24 )
 
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource( 4 )
-save_properties = [ "locked", "enabled" ]
+save_properties = [ "locked" ]
 
 [node name="InteractableArea2D" type="Area2D" parent="."]
 visible = false

@@ -12,7 +12,7 @@ onready var _ball: Sprite = $ball
 
 
 func _on_GameStateHelper_loading_data(data):
-	var trigger_value = GameStateService.get_state_value(trigger_id)
+	var trigger_value = data[trigger_id] if data.has(trigger_id) else null
 	if !trigger_value:
 		triggered = false
 		return
