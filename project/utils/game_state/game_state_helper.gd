@@ -1,11 +1,9 @@
-class_name GameStateHelper
+class_name GameStateHelper, "res://utils/game_state/icon_game_state_helper.svg"
 extends Node
 tool
 
 signal loading_data(data)
 signal saving_data(data)
-# signal to let service know that a instanced child scene was freed
-signal instanced_child_scene_freed(save_freeds_instanced_child_scene_object)
 
 
 # node group for helper nodes
@@ -65,6 +63,13 @@ func _set_global(value: bool) -> void:
 func _enter_tree():
 	# must add to group since this is just a GDScript file (no scene file)
 	add_to_group(NODE_GROUP)
+	# signal to let service know that a instanced child scene was freed
+	# add this signal this way hides it in the signal panel - it's only meant for the service
+	add_user_signal("instanced_child_scene_freed", [
+		{
+			"save_freeds_instanced_child_scene_object": TYPE_OBJECT
+		}
+		])
 
 
 """

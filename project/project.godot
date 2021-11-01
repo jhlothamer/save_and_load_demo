@@ -51,7 +51,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "GameSaveData": "",
-"GameStateHelper": "",
+"GameStateHelper": "res://utils/game_state/icon_game_state_helper.svg",
 "Hud": "",
 "InteractableArea2D": "",
 "InteractionArea2D": "",
