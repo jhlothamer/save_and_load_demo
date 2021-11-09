@@ -16,8 +16,6 @@ const GAME_STATE_KEY_INSTANCE_SCENE = "game_state_helper_dynamic_recreate_scene"
 const GAME_STATE_KEY_PARENT_FREED = "game_state_helper_parent_freed"
 
 
-
-
 """
 This class saves the fact that the instanced child scene was freed.
 When the save file is re-loaded, the GameStateHelper node/class will free it again.
@@ -63,6 +61,8 @@ func _set_global(value: bool) -> void:
 func _enter_tree():
 	# must add to group since this is just a GDScript file (no scene file)
 	add_to_group(NODE_GROUP)
+	if has_user_signal("instanced_child_scene_freed"):
+		return
 	# signal to let service know that a instanced child scene was freed
 	# add this signal this way hides it in the signal panel - it's only meant for the service
 	add_user_signal("instanced_child_scene_freed", [

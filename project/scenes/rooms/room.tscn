@@ -61,29 +61,21 @@ shape = SubResource( 2 )
 
 [node name="NorthRoomExit" parent="." instance=ExtResource( 3 )]
 position = Vector2( 512, 128 )
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room.tscn"
 
 [node name="SouthRoomExit" parent="." instance=ExtResource( 3 )]
 position = Vector2( 512, 472 )
 rotation = 3.14159
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room.tscn"
 
 [node name="EastRoomExit" parent="." instance=ExtResource( 3 )]
 position = Vector2( 896, 300 )
 rotation = 1.5708
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room.tscn"
 
 [node name="WestRoomExit" parent="." instance=ExtResource( 3 )]
 position = Vector2( 128, 300 )
 rotation = -1.5708
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room.tscn"
 
 [node name="YSort" type="YSort" parent="."]

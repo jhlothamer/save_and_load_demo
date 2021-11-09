@@ -10,6 +10,8 @@ script = ExtResource( 4 )
 
 [node name="NorthRoomExit" parent="." index="2"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
 [node name="room_exit" parent="NorthRoomExit" index="0"]
@@ -17,18 +19,20 @@ visible = false
 
 [node name="SouthRoomExit" parent="." index="3"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
 [node name="room_exit" parent="SouthRoomExit" index="0"]
 visible = false
 
 [node name="EastRoomExit" parent="." index="4"]
-collision_layer = 6
-collision_mask = 6
 destination_level_scene = "res://scenes/rooms/room_main.tscn"
 
 [node name="WestRoomExit" parent="." index="5"]
 visible = false
+collision_layer = 7
+collision_mask = 7
 enabled = false
 
 [node name="room_exit" parent="WestRoomExit" index="0"]

@@ -56,7 +56,10 @@ func dump_game_state() -> void:
 """
 Returns JSON string of current game state.
 """
-func get_game_state_string() -> String:
+func get_game_state_string(refresh_state: bool = false) -> String:
+	if refresh_state:
+		#fake a scene transition to force game state to be updated
+		_on_scene_transitioning("")
 	return JSON.print(_game_state, "\t")
 
 """

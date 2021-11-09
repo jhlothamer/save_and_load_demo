@@ -12,10 +12,7 @@ func _ready():
 
 
 func show_modal(exclusive: bool = false) -> void:
-	_text_edit.text = "var state_data := " + GameStateService.get_game_state_string()
-	for i in _text_edit.get_line_count():
-		if _text_edit.can_fold(i):
-			print("Can fold line %d" % i)
+	_text_edit.text = GameStateService.get_game_state_string(true)
 	get_tree().paused = true
 	.show_modal(exclusive)
 
