@@ -113,9 +113,10 @@ flat = true
 [node name="SaveGame" parent="." instance=ExtResource( 4 )]
 
 [node name="LoadGameDlg" parent="." instance=ExtResource( 5 )]
-visible = false
 
 [connection signal="pressed" from="VBoxContainer/ResumeBtn" to="." method="_on_ResumeBtn_pressed"]
 [connection signal="pressed" from="VBoxContainer/SaveBtn" to="." method="_on_SaveBtn_pressed"]
 [connection signal="pressed" from="VBoxContainer/LoadBtn" to="." method="_on_LoadBtn_pressed"]
 [connection signal="pressed" from="VBoxContainer/MainMenuBtn" to="." method="_on_MainMenuBtn_pressed"]
+[connection signal="popup_hide" from="SaveGame" to="." method="_on_SaveGame_popup_hide"]
+[connection signal="popup_hide" from="LoadGameDlg" to="." method="_on_LoadGameDlg_popup_hide"]

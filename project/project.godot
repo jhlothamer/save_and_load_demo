@@ -72,10 +72,15 @@ TransitionMgr="*res://utils/transition_mgr.tscn"
 GameStateService="*res://utils/game_state/game_state_service.gd"
 InventoryMgr="*res://utils/inventory_mgr.tscn"
 GameInit="*res://utils/game_init.gd"
+FullScreenMgr="*res://utils/full_screen_mgr.tscn"
 
 [debug]
 
 gdscript/warnings/enable=false
+
+[display]
+
+window/stretch/mode="2d"
 
 [input]
 
@@ -121,6 +126,11 @@ interact={
 pause={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+full_screen_toggle={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777254,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

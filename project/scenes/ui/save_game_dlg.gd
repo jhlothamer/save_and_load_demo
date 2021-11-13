@@ -10,7 +10,8 @@ var _save_game_image: Image
 
 
 func _ready():
-	pass # Replace with function body.
+	get_close_button().connect("pressed", self, "_on_close_cancel_pressed")
+	get_cancel().connect("pressed", self, "_on_close_cancel_pressed")
 
 
 func show_save_dlg(save_img: Image) -> void:
@@ -18,6 +19,7 @@ func show_save_dlg(save_img: Image) -> void:
 	var texture = ImageTexture.new()
 	texture.create_from_image(save_img)
 	_texture_rect.texture = texture
+	
 	show_modal(true)
 
 
@@ -37,9 +39,11 @@ func _on_SaveGame_confirmed():
 	if GameStateService.save(save_game_file_name):
 		var image_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".png"
 		_save_game_image.save_png(image_file_name)
-	
-	 
+	emit_signal("popup_hide")
 
+
+func _on_close_cancel_pressed():
+	emit_signal("popup_hide")
 
 
 

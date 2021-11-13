@@ -1,5 +1,5 @@
 # Save and Load Demo
-This is a demo project for saving and loading game state data in the Godot Engine.
+This is a demo project for saving and loading game state data in the Godot Engine.  It goes with the following video:  [Saving & Loading Games in Godot (with demo)](https://youtu.be/_gBpk5nKyXU)
 
 This demo goes beyond the ordinary capture of node property values and handles several game state management aspects most demos or tutorials ignore. These are:
 

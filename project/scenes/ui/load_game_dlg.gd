@@ -5,6 +5,11 @@ onready var _item_list: ItemList = $MarginContainer/HBoxContainer/ItemList
 onready var _texture_rect: TextureRect = $MarginContainer/HBoxContainer/TextureRect
 
 
+func _ready():
+	get_close_button().connect("pressed", self, "_on_close_cancel_pressed")
+	get_cancel().connect("pressed", self, "_on_close_cancel_pressed")
+
+
 func _get_saved_game_files():
 	var dir := Directory.new()
 	if dir.open(SaveGameDlg.SAVE_GAME_FOLDER) != OK:
@@ -56,3 +61,7 @@ func _on_LoadGameDlg_confirmed():
 		var save_file_name = SaveGameDlg.SAVE_GAME_FOLDER + "/" + base_file_name + ".tres"
 		var transition_func := funcref(TransitionMgr, "transition_to")
 		GameStateService.load(save_file_name, transition_func)
+
+
+func _on_close_cancel_pressed():
+	emit_signal("popup_hide")
