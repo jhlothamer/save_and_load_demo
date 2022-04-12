@@ -133,6 +133,14 @@ full_screen_toggle={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777254,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+autosave_on={
+"deadzone": 0.5,
+"events": [  ]
+}
+autosave_off={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [physics]
 

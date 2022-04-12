@@ -8,9 +8,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -378.5
+margin_left = -488.0
 margin_top = -253.5
-margin_right = 378.5
+margin_right = 488.0
 margin_bottom = 253.5
 theme = ExtResource( 1 )
 window_title = "Load Game"
@@ -31,21 +31,21 @@ custom_constants/margin_bottom = 40
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 731.0
+margin_right = 950.0
 margin_bottom = 421.0
 custom_constants/separation = 10
 
 [node name="ItemList" type="ItemList" parent="MarginContainer/HBoxContainer"]
-margin_right = 363.0
-margin_bottom = 457.0
+margin_right = 465.0
+margin_bottom = 411.0
 size_flags_horizontal = 3
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
-margin_left = 373.0
-margin_right = 737.0
-margin_bottom = 457.0
+margin_left = 475.0
+margin_right = 940.0
+margin_bottom = 411.0
 size_flags_horizontal = 3
-stretch_mode = 6
+stretch_mode = 5
 
 [connection signal="confirmed" from="." to="." method="_on_LoadGameDlg_confirmed"]
 [connection signal="item_selected" from="MarginContainer/HBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
