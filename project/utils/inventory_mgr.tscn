@@ -9,7 +9,6 @@ script = ExtResource( 2 )
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource( 1 )
 save_properties = [ "inventory_items" ]
-id = "9ee411df-d956-4f1f-8743-95bd4630bb72"
 global = true
 
 [connection signal="loading_data" from="GameStateHelper" to="." method="_on_GameStateHelper_loading_data"]

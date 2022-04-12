@@ -148,7 +148,6 @@ text = "Exit"
 flat = true
 
 [node name="LoadGameDlg" parent="." instance=ExtResource( 3 )]
-visible = false
 
 [connection signal="pressed" from="MarginContainer3/VBoxContainer/NewGameBtn" to="." method="_on_NewGameBtn_pressed"]
 [connection signal="pressed" from="MarginContainer3/VBoxContainer/LoadGameBtn" to="." method="_on_LoadGameBtn_pressed"]

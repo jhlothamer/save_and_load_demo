@@ -23,7 +23,7 @@ func show_save_dlg(save_img: Image) -> void:
 	show_modal(true)
 
 
-func _get_date_time_string():
+static func _get_date_time_string():
 	# year, month, day, weekday, dst (daylight savings time), hour, minute, second.
 	var datetime = OS.get_datetime()
 	return "%d%02d%02d_%02d%02d%02d" % [datetime["year"], datetime["month"], datetime["day"], datetime["hour"], datetime["minute"], datetime["second"]]
@@ -32,13 +32,7 @@ func _get_date_time_string():
 
 
 func _on_SaveGame_confirmed():
-	var dir = Directory.new()
-	dir.make_dir_recursive(SAVE_GAME_FOLDER)
-	var date_string = _get_date_time_string()
-	var save_game_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".tres"
-	if GameStateService.save(save_game_file_name):
-		var image_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".png"
-		_save_game_image.save_png(image_file_name)
+	_save(_save_game_image, false)
 	emit_signal("popup_hide")
 
 
@@ -46,4 +40,17 @@ func _on_close_cancel_pressed():
 	emit_signal("popup_hide")
 
 
+static func _save(screenshot: Image, checkpoint: bool):
+	var dir = Directory.new()
+	dir.make_dir_recursive(SAVE_GAME_FOLDER)
+	var date_string = _get_date_time_string()
+	if checkpoint:
+		date_string += "_autosave"
+	var save_game_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".tres"
+	if GameStateService.save(save_game_file_name):
+		var image_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".png"
+		screenshot.save_png(image_file_name)
 
+
+static func save_checkpoint(screenshot: Image):
+	_save(screenshot, true)

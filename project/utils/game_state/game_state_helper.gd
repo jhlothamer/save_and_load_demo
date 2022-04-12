@@ -110,11 +110,16 @@ func load_data(var data: Dictionary) -> void:
 	var parent = get_parent()
 	var id = str(parent.get_path())
 	
-	if !data.has(id):
+	var node_data: Dictionary
+	
+	if global:
+		node_data = data
+	elif data.has(id):
+		node_data = data[id]
+	else:
 		# emit signal - allows parent o have it's own load code/logic
-		emit_signal("loading_data", data)
+		emit_signal("loading_data", node_data)
 		return
-	var node_data = data[id]
 	
 	# if parent was noted as being freed in the save file - free it again
 	if node_data.has(GAME_STATE_KEY_PARENT_FREED):
@@ -124,7 +129,8 @@ func load_data(var data: Dictionary) -> void:
 	
 	# set parent property values
 	for prop_name in save_properties:
-		parent.set(prop_name, node_data[prop_name])
+		if node_data.has(prop_name):
+			parent.set(prop_name, node_data[prop_name])
 	
 	# emit signal - allows parent o have it's own load code/logic
 	emit_signal("loading_data", node_data)

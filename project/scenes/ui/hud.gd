@@ -6,6 +6,11 @@ onready var _info_dlg: AcceptDialog = $InfoDialog
 onready var _game_state_dlg: AcceptDialog = $RawGameStateDlg
 onready var _msg_label: Label = $MessageLabel
 onready var _msg_timer: Timer = $MessageTimer
+onready var _auto_save_icon: TextureRect = $AutoSaveMarginContainer/AutoSaveTextureRect
+onready var _auto_save_animation_player: AnimationPlayer = $AutoSaveMarginContainer/AutoSaveAnimationPlayer
+
+func _ready():
+	_auto_save_icon.visible = false
 
 
 func show_info_dlg(info_text: String) -> void:
@@ -24,3 +29,23 @@ func _on_ViewGameStateBtn_pressed():
 
 func _on_MessageTimer_timeout():
 	_msg_label.text = ""
+
+
+func _input(event):
+	# there are far better ways to trigger this
+	#   but this will do for a demo
+	if event.is_action("autosave_on"):
+		_auto_save_icon.visible = true
+	if event.is_action("autosave_off"):
+		# 
+		# yield(get_tree().create_timer(1.0), "timeout")
+		#_auto_save_icon.visible = false
+		_auto_save_animation_player.play("disk_exit")
+
+
+
+func _on_AutoSaveAnimationPlayer_animation_finished(anim_name):
+	if anim_name == "RESET":
+		return
+	_auto_save_icon.visible = false
+	_auto_save_animation_player.play("RESET")

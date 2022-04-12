@@ -5,7 +5,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg8"
-   inkscape:version="1.1.1 (eb90963e84, 2021-10-02)"
+   inkscape:version="1.1.2 (08b2f3d93c, 2022-04-05)"
    sodipodi:docname="save_and_load_demo.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -690,8 +690,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="3015.3053"
-     inkscape:cy="-151.52288"
+     inkscape:cx="-383.85796"
+     inkscape:cy="-297.995"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -699,10 +699,10 @@
      units="px"
      showborder="false"
      inkscape:snap-global="true"
-     inkscape:window-width="1840"
-     inkscape:window-height="1043"
-     inkscape:window-x="80"
-     inkscape:window-y="0"
+     inkscape:window-width="1852"
+     inkscape:window-height="1016"
+     inkscape:window-x="1988"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-midpoints="true"
@@ -718,7 +718,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1842,5 +1841,13 @@
          d="M 919.29878,-84.35057 V 6.13666 L 904.60537,28.816955 V -107.03087 Z"
          sodipodi:nodetypes="ccccc" />
     </g>
+    <path
+       d="m -35.332588,-97.540736 c -1.33604,0 -2.41906,1.083063 -2.41906,2.419058 v 12.095212 c 0,1.336046 1.08306,2.419061 2.41906,2.419061 h 12.095214 c 1.33605,0 2.419059,-1.08306 2.419059,-2.419061 v -8.466646 -1.209507 -1.209551 l -3.628559,-3.628566 h -1.20951 v 6.047624 1.209508 h -9.676204 z m 1.20951,0 v 6.047624 h 3.628569 v -6.047624 z m 4.838119,9.676193 c 1.336,0 2.41902,1.083062 2.41902,2.419061 0,1.336044 -1.08302,2.419016 -2.41902,2.419016 -1.336,0 -2.419059,-1.083016 -2.419059,-2.419016 0,-1.336045 1.083059,-2.419061 2.419059,-2.419061 z"
+       fill="#e0e0e0"
+       id="path14155-0"
+       style="stroke-width:0.132291"
+       inkscape:export-filename="/home/jason/projects/godot/3/video_talks/save_and_load_demo/project/assets/images/ui/saving_icon.png"
+       inkscape:export-xdpi="95.999298"
+       inkscape:export-ydpi="95.999298" />
   </g>
 </svg>
