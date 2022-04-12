@@ -7,6 +7,7 @@ This demo goes beyond the ordinary capture of node property values and handles s
 - Capturing the fact that an instanced child scene in a game scene is freed. The instanced child scene is re-freed each time it's parent scene is loaded. This could apply to a boss-like enemy that is added at design time, but needs to disappear from the game once defeated.
 - Capturing the instancing of dynamic child scenes (think spawned enemies, etc.). These dynamic child scenes are re-instanced each time the scene is loaded.
 - Game state can be either local to a scene (default) or set as global. Global game state allows state updated in one scene to affect another scene. For example, a triggering event in one level causes a barrier to open in another.
+- Automatically saving game state to file when a checkpoint is triggered.
 
 With these abilities it's possible to create much larger and richer games consisting of multiple scenes. And of course players can save their progress and restart where they left off later.
 
@@ -48,6 +49,8 @@ The **GameStateService** can load saved games from disk as well. While it does t
 
 The service also takes a FuncRef object which is called with the current scene found in the game state data. This function should change to or transition to this current scene.
 
+### Automically Saving Game State to Disk (Checkpoint)
+The demo implements a checkpoint as a visible disk icon with the label "checkpoint".  Passing the demo game character over it will start the checkpoint save.  This is handled like regular saves except the files saved end with "autosave" before the file extensions.  A disk also appears in the top right corner of the screen.  On some systems this saving process is so fast that the disk is not visible, so an animation was added when the disk is dismissed at the end of saving to ensure it is visible.
 
 Credits:
 -----------
