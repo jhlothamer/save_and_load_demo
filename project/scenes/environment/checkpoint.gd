@@ -20,6 +20,7 @@ func _on_Checkpoint_body_entered(body):
 
 func _start_checkpoint_save():
 	self.triggered = true
+	# wait a few frames so the checkpoint will not be visible in the screenshot taken
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
 	var screenshot = get_viewport().get_texture().get_data()

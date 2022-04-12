@@ -37,9 +37,8 @@ func _input(event):
 	if event.is_action("autosave_on"):
 		_auto_save_icon.visible = true
 	if event.is_action("autosave_off"):
-		# 
-		# yield(get_tree().create_timer(1.0), "timeout")
-		#_auto_save_icon.visible = false
+		# play animation to give player time to see the disk
+		#  (some systems are so fast it doesn't have time to appear)
 		_auto_save_animation_player.play("disk_exit")
 
 
