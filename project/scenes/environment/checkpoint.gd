@@ -20,13 +20,11 @@ func _on_Checkpoint_body_entered(body):
 
 func _start_checkpoint_save():
 	self.triggered = true
-	# wait a few frames so the checkpoint will not be visible in the screenshot taken
-	yield(get_tree(), "idle_frame")
-	yield(get_tree(), "idle_frame")
+	get_viewport().set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
+	yield(VisualServer, "frame_post_draw")
 	var screenshot = get_viewport().get_texture().get_data()
 	var thread := Thread.new()
 	thread.start(self, "_save_thread_func", [screenshot, thread])
-	thread.wait_to_finish()
 
 
 func _send_autosave_event(on: bool):
