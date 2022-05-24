@@ -86,7 +86,7 @@ func save_data(var data: Dictionary) -> void:
 		# add node data to data dictionary
 		data[id] = node_data
 	
-	if !parent.owner and !global:
+	if !parent.owner and !global and parent != get_tree().current_scene:
 		# no owner means the parent was instanced - save the scene file path so it can be re-instanced
 		node_data[GAME_STATE_KEY_INSTANCE_SCENE] = parent.filename
 		
