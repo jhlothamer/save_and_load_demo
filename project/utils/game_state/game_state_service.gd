@@ -77,9 +77,11 @@ Loads game state data from given file path.  If loading is successful,
 calls given func ref for scene transition if given.
 """
 func load(path: String, scene_transition_func: FuncRef) -> bool:
-	if !ResourceLoader.exists(path):
+	var f := File.new()
+	if !f.file_exists(path):
 		printerr("GameStateService: File does not exist: path %s" % path)
 		return false
+	
 	
 	var save_file_hash = _get_file_content_hash(path)
 	var saved_hash = _get_save_file_hash(path)
@@ -88,12 +90,14 @@ func load(path: String, scene_transition_func: FuncRef) -> bool:
 		printerr("GameStateService: Save file is corrupt or has been modified: path %s" % path)
 		return false
 	
-	var game_save_data: GameSaveData = ResourceLoader.load(path)
-	if !game_save_data:
-		printerr("GameStateService: File does not contain value game save data: path %s" % path)
+	if OK != f.open(path, File.READ):
+		printerr("GameStateService: File does not exist: path %s" % path)
 		return false
+
+	_game_state = str2var(f.get_as_text())
 	
-	_game_state = game_save_data.data
+	f.close()
+	
 	_skip_next_scene_transition_save = true
 	
 	#return path to scene that was current for save file
@@ -101,7 +105,36 @@ func load(path: String, scene_transition_func: FuncRef) -> bool:
 	var scene_path = _game_state["meta_data"]["current_scene_path"]
 	if scene_transition_func:
 		scene_transition_func.call_func(scene_path)
+
 	return true
+
+# WARNING: loading resource file can allow code to be executed
+#func _load_unsafe(path: String, scene_transition_func: FuncRef) -> bool:
+#	if !ResourceLoader.exists(path):
+#		printerr("GameStateService: File does not exist: path %s" % path)
+#		return false
+#
+#	var save_file_hash = _get_file_content_hash(path)
+#	var saved_hash = _get_save_file_hash(path)
+#
+#	if save_file_hash != saved_hash:
+#		printerr("GameStateService: Save file is corrupt or has been modified: path %s" % path)
+#		return false
+#
+#	var game_save_data: GameSaveData = ResourceLoader.load(path)
+#	if !game_save_data:
+#		printerr("GameStateService: File does not contain value game save data: path %s" % path)
+#		return false
+#
+#	_game_state = game_save_data.data
+#	_skip_next_scene_transition_save = true
+#
+#	#return path to scene that was current for save file
+#	# this lets caller handle the transition
+#	var scene_path = _game_state["meta_data"]["current_scene_path"]
+#	if scene_transition_func:
+#		scene_transition_func.call_func(scene_path)
+#	return true
 
 
 """
@@ -117,18 +150,37 @@ will be saved along with the file with the extention ".dat".  The hash will
 be used during load() to detect if the save game file has been altered.
 """
 func save(path: String) -> bool:
-	var game_save_data := GameSaveData.new()
-	
 	#fake a scene transition to force game state to be updated
 	_on_scene_transitioning("")
-	game_save_data.data = _game_state
 	
-	var error = ResourceSaver.save(path, game_save_data)
-	if error != OK:
-		printerr("GameStateService: Could not save game data to file: path %s" % path)
+	_game_state["game_data_version"] = "1.0"
+
+	var f = File.new()
+	if OK != f.open(path, File.WRITE):
+		printerr("Couldn't hopen file to save to : %s" % path)
 		return false
+	else:
+		f.store_string(var2str(_game_state))
+		f.close()
+
 	_save_save_file_hash(path)
+
 	return true
+
+# WARNING - arbitrary code can be executed from a resource file when it is loaded
+#func _save_unsafe(path: String) -> bool:
+#	var game_save_data := GameSaveData.new()
+#
+#	#fake a scene transition to force game state to be updated
+#	_on_scene_transitioning("")
+#	game_save_data.data = _game_state
+#
+#	var error = ResourceSaver.save(path, game_save_data)
+#	if error != OK:
+#		printerr("GameStateService: Could not save game data to file: path %s" % path)
+#		return false
+#	_save_save_file_hash(path)
+#	return true
 
 
 """
@@ -389,7 +441,7 @@ func _get_file_content_hash(file_path: String) -> String:
 Gets md5 hash of a save file that was saved along side (in another file)
 """
 func _get_save_file_hash(file_path: String) -> String:
-	file_path = file_path.replace(".tres", ".dat")
+	file_path = file_path.replace("." + file_path.get_extension(), ".dat")
 	var f = File.new()
 	if f.open(file_path, File.READ) != OK:
 		return ""
@@ -405,7 +457,7 @@ contents have been altered.
 """
 func _save_save_file_hash(file_path: String) -> void:
 	var content_hash = _get_file_content_hash(file_path)
-	file_path = file_path.replace(".tres", ".dat")
+	file_path = file_path.replace("." + file_path.get_extension(), ".dat")
 	var f = File.new()
 	if f.open(file_path, File.WRITE) != OK:
 		return

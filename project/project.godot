@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
-"class": "GameSaveData",
-"language": "GDScript",
-"path": "res://utils/game_state/game_save_data.gd"
-}, {
 "base": "Node",
 "class": "GameStateHelper",
 "language": "GDScript",
@@ -50,7 +45,6 @@ _global_script_classes=[ {
 "path": "res://scenes/ui/save_game_dlg.gd"
 } ]
 _global_script_class_icons={
-"GameSaveData": "",
 "GameStateHelper": "res://utils/game_state/icon_game_state_helper.svg",
 "Hud": "",
 "InteractableArea2D": "",

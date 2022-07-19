@@ -18,7 +18,7 @@ func _get_saved_game_files():
 	var files := []
 	var file_name = dir.get_next()
 	while !file_name.empty():
-		if file_name.ends_with(".tres"):
+		if file_name.ends_with(".json"):
 			files.append(file_name.get_basename())
 		file_name = dir.get_next()
 	
@@ -58,7 +58,7 @@ func _on_LoadGameDlg_confirmed():
 	if selected:
 		var index = selected[0]
 		var base_file_name = _item_list.get_item_text(index)
-		var save_file_name = SaveGameDlg.SAVE_GAME_FOLDER + "/" + base_file_name + ".tres"
+		var save_file_name = SaveGameDlg.SAVE_GAME_FOLDER + "/" + base_file_name + ".json"
 		var transition_func := funcref(TransitionMgr, "transition_to")
 		GameStateService.load(save_file_name, transition_func)
 

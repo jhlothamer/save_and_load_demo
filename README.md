@@ -1,4 +1,7 @@
 # Save and Load Demo
+
+**NOTE: The previous version of this demo contained a security vulnerability in the use of a Godot resource file to save and load data.  When a resource file is loaded, arbitrary code can be executed, opening up players to attack.  This demo has been updated to save game data in the JSON file format.  Please see [This video from GDQuest](https://youtu.be/j7p7cGj20jU) for details.  Not implemented in this demo, but mentioned below, you can also encrypt game save files to further protect players and, if desirable, prevent cheating.**
+
 This is a demo project for saving and loading game state data in the Godot Engine.  It goes with the following video:  [Saving & Loading Games in Godot (with demo)](https://youtu.be/_gBpk5nKyXU)
 
 This demo goes beyond the ordinary capture of node property values and handles several game state management aspects most demos or tutorials ignore. These are:
@@ -40,12 +43,12 @@ There is a flag on the **GameStateHelper** called "Dynamic Instance". Check this
 When you need to pass game state between scenes - for example a trigger in one scene causes a change in another - you need to use the global game state. You can do this by checking the "Global" property on the helper, or calling the **GameStateService**'s set_global_state_value() and get_global_state_value() functions.
 
 ### Saving Game State to Disk
-The demo has the ability to save the game state. Whenever this happens, the current game state is re-captured to get the latest values and then saved off in a text resource file (.tres). Along with the resource file a ".dat" file is created that contains an md5 hash of the save game file. This is used during loading to see if the save game has been changed.
+The demo has the ability to save the game state. Whenever this happens, the current game state is re-captured to get the latest values and then saved off in a JSON file (.json). Along with the JSON file a ".dat" file is created that contains an md5 hash of the save game file. This is used during loading to see if the save game has been changed.
 
-Note that this type of security is really only meant to keep from loading a file that was accidentally modified or somehow became corrupted on disk. A knowledgeable user could easily make modifications and update the md5 hash. You may wish to switch to using a binary resource file - or even save the file with a password. These measures would further secure the file.
+Note that this type of security is really only meant to keep from loading a file that was accidentally modified or somehow became corrupted on disk. A knowledgeable user could easily make modifications and update the md5 hash. You may wish to switch to using a binary file - or even save the file with a password. These measures would further secure the file.
 
 ### Loading Game State from Disk
-The **GameStateService** can load saved games from disk as well. While it does this it checks to see if the saved game resource file contents have been altered by re-computing it's md5 hash and checking it against the hash stored in the .dat file that was save along side it.
+The **GameStateService** can load saved games from disk as well. While it does this it checks to see if the saved game JSON file contents have been altered by re-computing it's md5 hash and checking it against the hash stored in the .dat file that was save along side it.
 
 The service also takes a FuncRef object which is called with the current scene found in the game state data. This function should change to or transition to this current scene.
 

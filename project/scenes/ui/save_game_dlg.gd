@@ -46,7 +46,7 @@ static func _save(screenshot: Image, checkpoint: bool):
 	var date_string = _get_date_time_string()
 	if checkpoint:
 		date_string += "_autosave"
-	var save_game_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".tres"
+	var save_game_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".json"
 	if GameStateService.save(save_game_file_name):
 		var image_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".png"
 		screenshot.save_png(image_file_name)
