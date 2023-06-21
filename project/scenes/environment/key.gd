@@ -1,6 +1,6 @@
-extends Sprite
+extends Sprite2D
 
-onready var _interaction_indicator: Sprite = $key_interaction_indicator
+@onready var _interaction_indicator: Sprite2D = $key_interaction_indicator
 
 
 

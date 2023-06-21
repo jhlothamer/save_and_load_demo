@@ -1,18 +1,19 @@
 extends "res://scenes/rooms/room.gd"
 
 
-onready var _release_key_switch := $YSort/ReleaseKeyFloorSwitch
-onready var _key = $YSort/Key
-onready var _key_end_pos: Position2D = $KeyEndPosition
-onready var _tween: Tween = $Tween
+@onready var _release_key_switch := $Node2D/ReleaseKeyFloorSwitch
+@onready var _key = $Node2D/Key
+@onready var _key_end_pos: Marker2D = $KeyEndPosition
 
 
 func _ready():
-	_release_key_switch.connect("switch_state_changed", self, "_on_ReleaseKeyFloorSwitch_switch_state_changed")
+	super._ready()
+	_release_key_switch.connect("switch_state_changed", Callable(self, "_on_ReleaseKeyFloorSwitch_switch_state_changed"))
 
 
 func _on_ReleaseKeyFloorSwitch_switch_state_changed(triggered_flag: bool) -> void:
 	var start = _key.global_position
 	var end = _key_end_pos.global_position
-	_tween.interpolate_property(_key, "global_position", start, end, 1.0,Tween.TRANS_BOUNCE,Tween.EASE_OUT)
-	_tween.start()
+	var tween = create_tween()
+	tween.tween_property(_key, "global_position", end, 1.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	tween.play()

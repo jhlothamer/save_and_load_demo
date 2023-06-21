@@ -11,7 +11,7 @@ enum StatesFrames {
 }
 
 
-onready var _animated_sprite: AnimatedSprite = $AnimatedSprite
+@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
 func _on_FloorTrigger_body_entered(body):

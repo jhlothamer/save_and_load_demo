@@ -1,12 +1,12 @@
-extends Sprite
+extends Sprite2D
 
 signal info_requested(info_msg)
 
 
-export (String, MULTILINE) var bb_code_info_msg := "This is a default message."
+@export_multiline var bb_code_info_msg := "This is a default message."
 
 
-onready var _interact_indicator: Sprite = $info_interact_indicator
+@onready var _interact_indicator: Sprite2D = $info_interact_indicator
 
 
 func _ready():

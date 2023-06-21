@@ -1,7 +1,7 @@
 class_name InteractionArea2D
 extends Area2D
 
-export var enabled := true setget _set_enabled
+@export var enabled := true: set = _set_enabled
 
 var _interactable_objects_nearby = []
 var _previous_global_position: Vector2 = Vector2.INF
@@ -13,6 +13,8 @@ class InteractableObject:
 	var obj: Area2D
 	var distance_from_player_sq: float
 	func calc_distance_from(current_player_position: Vector2):
+		if obj == null or !is_instance_valid(obj):
+			return INF
 		distance_from_player_sq = current_player_position.distance_squared_to(obj.global_position)
 
 
@@ -23,8 +25,8 @@ class InteractablObjectSorter:
 		return false
 
 func _ready():
-	connect("area_entered", self, "_on_interactionArea_area_entered")
-	connect("area_exited", self, "_on_interactionArea_area_exited")
+	connect("area_entered", Callable(self, "_on_interactionArea_area_entered"))
+	connect("area_exited", Callable(self, "_on_interactionArea_area_exited"))
 
 
 func _set_enabled(value) -> void:
@@ -41,10 +43,9 @@ func _add_interactable_object(obj):
 
 
 func _remove_interactable_object(obj):
-	for i in range(_interactable_objects_nearby.size()):
-		var io = _interactable_objects_nearby[i]
+	for io in _interactable_objects_nearby:
 		if io.obj == obj:
-			_interactable_objects_nearby.remove(i)
+			_interactable_objects_nearby.erase(io)
 			obj.toggle_interact_indicator(false, get_parent())
 			break
 	_update_interactable_indicators()
@@ -68,7 +69,7 @@ func _update_interactable_objects():
 	for io in _interactable_objects_nearby:
 		io.calc_distance_from(global_position)
 		
-	_interactable_objects_nearby.sort_custom(InteractablObjectSorter, "sort")
+	_interactable_objects_nearby.sort_custom(Callable(InteractablObjectSorter, "sort"))
 
 
 func _on_interactionArea_area_entered(area):

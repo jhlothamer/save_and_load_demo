@@ -4,9 +4,9 @@ extends Area2D
 signal InteractionStarted(interactable, interactor)
 signal InteractionIndicatorStateChanged(interactable, indicator_visible)
 
-export var enabled := true
-export var limit_interaction_to_groups := false
-export (Array, String) var limit_interaction_groups := []
+@export var enabled := true
+@export var limit_interaction_to_groups := false
+@export var limit_interaction_groups:Array[String] = []
 
 var _interaction_areas := []
 var _previous_global_position := Vector2.INF
@@ -14,7 +14,7 @@ var _previous_global_position := Vector2.INF
 func _ready():
 	add_to_group("interactable")
 
-func can_interact_with(interactor: KinematicBody2D) -> bool:
+func can_interact_with(interactor: CharacterBody2D) -> bool:
 	if !enabled:
 		return false
 	
@@ -41,7 +41,6 @@ func start_interaction(interactor: Node) -> void:
 func _physics_process(_delta):
 	if _previous_global_position != global_position:
 		_previous_global_position = global_position
-		if _interaction_areas:
-			for interaction_area in _interaction_areas:
-				interaction_area.interactable_has_moved(self)
+		for interaction_area in _interaction_areas:
+			interaction_area.interactable_has_moved(self)
 

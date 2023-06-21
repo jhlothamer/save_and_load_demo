@@ -1,8 +1,8 @@
 extends "res://scenes/rooms/room.gd"
 
-onready var _west_pedistal = $YSort/WestBallPedistal
-onready var _east_pedistal = $YSort/EastBallPedistal
-onready var _north_room_exit := $NorthRoomExit
+@onready var _west_pedistal = $Node2D/WestBallPedistal
+@onready var _east_pedistal = $Node2D/EastBallPedistal
+@onready var _north_room_exit := $NorthRoomExit
 
 
 func _how_many_things_needed_to_unlock() -> int:

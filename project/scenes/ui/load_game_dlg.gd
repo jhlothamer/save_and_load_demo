@@ -1,29 +1,29 @@
 extends ConfirmationDialog
 
 
-onready var _item_list: ItemList = $MarginContainer/HBoxContainer/ItemList
-onready var _texture_rect: TextureRect = $MarginContainer/HBoxContainer/TextureRect
+@onready var _item_list: ItemList = $MarginContainer/HBoxContainer/ItemList
+@onready var _texture_rect: TextureRect = $MarginContainer/HBoxContainer/TextureRect
 
 
 func _ready():
-	get_close_button().connect("pressed", self, "_on_close_cancel_pressed")
-	get_cancel().connect("pressed", self, "_on_close_cancel_pressed")
+	visible = false
+	get_cancel_button().connect("pressed", Callable(self, "_on_close_cancel_pressed"))
 
 
 func _get_saved_game_files():
-	var dir := Directory.new()
-	if dir.open(SaveGameDlg.SAVE_GAME_FOLDER) != OK:
+	var dir := DirAccess.open(SaveGameDlg.SAVE_GAME_FOLDER)
+	if dir == null:
 		return []
 	dir.list_dir_begin()
 	var files := []
 	var file_name = dir.get_next()
-	while !file_name.empty():
+	while !file_name.is_empty():
 		if file_name.ends_with(".json"):
 			files.append(file_name.get_basename())
 		file_name = dir.get_next()
-	
+
 	files.sort()
-	files.invert()
+	files.reverse()
 	return files
 
 func _refresh_list():
@@ -39,8 +39,7 @@ func show_modal(exclusive: bool = false) -> void:
 	
 	_refresh_list()
 	
-	.show_modal(exclusive)
-
+	popup_centered()
 
 func _on_ItemList_item_selected(index):
 	var base_file_name = _item_list.get_item_text(index)
@@ -49,7 +48,7 @@ func _on_ItemList_item_selected(index):
 	var image = Image.new()
 	image.load(image_file_name)
 	var texture = ImageTexture.new()
-	texture.create_from_image(image)
+	texture.set_image(image)
 	_texture_rect.texture = texture
 
 
@@ -59,9 +58,5 @@ func _on_LoadGameDlg_confirmed():
 		var index = selected[0]
 		var base_file_name = _item_list.get_item_text(index)
 		var save_file_name = SaveGameDlg.SAVE_GAME_FOLDER + "/" + base_file_name + ".json"
-		var transition_func := funcref(TransitionMgr, "transition_to")
-		GameStateService.load(save_file_name, transition_func)
+		GameStateService.load(save_file_name, TransitionMgr.transition_to)
 
-
-func _on_close_cancel_pressed():
-	emit_signal("popup_hide")

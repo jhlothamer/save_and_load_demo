@@ -3,7 +3,7 @@ extends Node2D
 const ENTERING_ROOM_FROM_DIRECTION_STATE_KEY = "entering_room_from_direction"
 
  
-onready var _room_exit_by_direction := {
+@onready var _room_exit_by_direction := {
 	"North": $NorthRoomExit,
 	"South": $SouthRoomExit,
 	"East": $EastRoomExit,
@@ -19,16 +19,16 @@ var _player_face_direction := {
 }
 
 
-onready var _player: Player = $YSort/Player
-onready var _hud: Hud = $Hud
+@onready var _player: Player = $Node2D/Player
+@onready var _hud: Hud = $Hud
 
 
 func _ready():
 	# wait for game state load to finish
-	yield(GameStateService, "state_load_completed")
+	await GameStateService.state_load_completed
 	
 	var enter_room_from_direction = GameStateService.get_global_state_value(ENTERING_ROOM_FROM_DIRECTION_STATE_KEY)
-	if !enter_room_from_direction:
+	if enter_room_from_direction == null or enter_room_from_direction == "":
 		return
 	
 	#if we've entered from another room

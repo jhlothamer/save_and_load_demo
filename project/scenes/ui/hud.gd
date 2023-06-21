@@ -2,12 +2,12 @@ class_name Hud
 extends CanvasLayer
 
 
-onready var _info_dlg: AcceptDialog = $InfoDialog
-onready var _game_state_dlg: AcceptDialog = $RawGameStateDlg
-onready var _msg_label: Label = $MessageLabel
-onready var _msg_timer: Timer = $MessageTimer
-onready var _auto_save_icon: TextureRect = $AutoSaveMarginContainer/AutoSaveTextureRect
-onready var _auto_save_animation_player: AnimationPlayer = $AutoSaveMarginContainer/AutoSaveAnimationPlayer
+@onready var _info_dlg: AcceptDialog = $InfoDialog
+@onready var _game_state_dlg: AcceptDialog = $RawGameStateDlg
+@onready var _msg_label: Label = $MessageLabel
+@onready var _msg_timer: Timer = $MessageTimer
+@onready var _auto_save_icon: TextureRect = $AutoSaveMarginContainer/AutoSaveTextureRect
+@onready var _auto_save_animation_player: AnimationPlayer = $AutoSaveMarginContainer/AutoSaveAnimationPlayer
 
 func _ready():
 	_auto_save_icon.visible = false

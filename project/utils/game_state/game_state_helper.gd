@@ -1,6 +1,7 @@
-class_name GameStateHelper, "res://utils/game_state/icon_game_state_helper.svg"
+@tool
+@icon("res://utils/game_state/icon_game_state_helper.svg")
+class_name GameStateHelper
 extends Node
-tool
 
 signal loading_data(data)
 signal saving_data(data)
@@ -35,13 +36,13 @@ class SaveFreedInstancedChildScene:
 
 
 # list of property names to save
-export (Array, String) var save_properties := []
+@export var save_properties:Array[String] = []
 # check this property (make true) if the parent is dynamically created during your game
-export var dynamic_instance := false setget _set_dynamic_instance
+@export var dynamic_instance := false: set = _set_dynamic_instance
 # causes the data to be saved/loaded to the global game state dictionary
 #  otherwise state is saved/loaded on a per-scene basis
-export var global := false setget _set_global
-export var debug := false
+@export var global := false: set = _set_global
+@export var debug := false
 
 
 func _set_dynamic_instance(value: bool) -> void:
@@ -75,7 +76,7 @@ func _enter_tree():
 """
 Saves property values from it's parent to the given data dictionary
 """
-func save_data(var data: Dictionary) -> void:
+func save_data(data: Dictionary) -> void:
 	var parent = get_parent()
 	var id = str(parent.get_path())
 
@@ -88,7 +89,7 @@ func save_data(var data: Dictionary) -> void:
 	
 	if !parent.owner and !global and parent != get_tree().current_scene:
 		# no owner means the parent was instanced - save the scene file path so it can be re-instanced
-		node_data[GAME_STATE_KEY_INSTANCE_SCENE] = parent.filename
+		node_data[GAME_STATE_KEY_INSTANCE_SCENE] = parent.scene_file_path
 		
 	#save path - makes data easier to identifier in save file for debugging
 	# also used to find parent to instanced scenes
@@ -106,7 +107,7 @@ func save_data(var data: Dictionary) -> void:
 """
 Loads property values from data dictionary and sets them on parent
 """
-func load_data(var data: Dictionary) -> void:
+func load_data(data: Dictionary) -> void:
 	var parent = get_parent()
 	var id = str(parent.get_path())
 	
@@ -139,7 +140,7 @@ func load_data(var data: Dictionary) -> void:
 """
 Like load_data but for instanced nodes.
 """
-func set_data(saved_id: String, var node_data: Dictionary) -> void:
+func set_data(saved_id: String, node_data: Dictionary) -> void:
 	var parent = get_parent()
 	# set parent property values
 	for prop_name in save_properties:

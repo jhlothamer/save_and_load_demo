@@ -1,15 +1,15 @@
 class_name Player
-extends KinematicBody2D
+extends CharacterBody2D
 
 
-export var speed := 300.0
+@export var speed := 300.0
 
-onready var _animated_sprite: AnimatedSprite = $AnimatedSprite
-onready var _interaction_area: InteractionArea2D = $InteractionArea2D
+@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _interaction_area: InteractionArea2D = $InteractionArea2D
 
 
 var disabled := false
-var facing_direction := Vector2.DOWN setget _set_facing_direction
+var facing_direction := Vector2.DOWN: set = _set_facing_direction
 
 
 func _set_facing_direction(value: Vector2) -> void:
@@ -35,7 +35,9 @@ func _physics_process(_delta):
 		return
 	face_direction(v)
 	v = v.normalized()*speed
-	var _discard = move_and_slide(v)
+	set_velocity(v)
+	move_and_slide()
+	var _discard = velocity
 
 
 func _get_move_vector() -> Vector2:

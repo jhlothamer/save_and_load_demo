@@ -1,6 +1,6 @@
 extends Control
 
-onready var _load_game_dlg = $LoadGameDlg
+@onready var _load_game_dlg = $LoadGameDlg
 
 
 func _on_NewGameBtn_pressed():
