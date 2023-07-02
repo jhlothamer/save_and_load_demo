@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://4uqwdoj1fivu"]
+[gd_scene load_steps=6 format=3 uid="uid://4uqwdoj1fivu"]
 
 [ext_resource type="PackedScene" uid="uid://coukma0hbqk0v" path="res://scenes/environment/ball_pedistal.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://oph56k0gk8qm" path="res://scenes/rooms/room.tscn" id="2"]
 [ext_resource type="Script" path="res://scenes/rooms/room_main.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://dj5qovg3gpsq6" path="res://scenes/environment/checkpoint.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://cercpt6g4ukh8" path="res://scenes/environment/floor_switch_resource_test.tscn" id="5_1gsey"]
 
 [node name="RoomMain" instance=ExtResource("2")]
 script = ExtResource("3")
@@ -42,6 +43,9 @@ trigger_id = "west_trigger"
 [node name="EastBallPedistal" parent="Node2D" index="3" instance=ExtResource("1")]
 position = Vector2(610.619, 160.98)
 trigger_id = "east_trigger"
+
+[node name="FloorSwitchResourceTest" parent="Node2D" index="4" instance=ExtResource("5_1gsey")]
+position = Vector2(243, 407)
 
 [editable path="NorthRoomExit"]
 [editable path="SouthRoomExit"]

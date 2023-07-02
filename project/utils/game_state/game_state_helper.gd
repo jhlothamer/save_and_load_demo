@@ -98,7 +98,7 @@ func save_data(data: Dictionary) -> void:
 	
 	# add property values to node data
 	for prop_name in save_properties:
-		node_data[prop_name] = parent.get(prop_name)
+		node_data[prop_name] = parent.get_indexed(prop_name)
 	
 	# emit signal - allows parent to have it's own save code/logic
 	emit_signal("saving_data", node_data)
@@ -131,7 +131,7 @@ func load_data(data: Dictionary) -> void:
 	# set parent property values
 	for prop_name in save_properties:
 		if node_data.has(prop_name):
-			parent.set(prop_name, node_data[prop_name])
+			parent.set_indexed(prop_name, node_data[prop_name])
 	
 	# emit signal - allows parent o have it's own load code/logic
 	emit_signal("loading_data", node_data)
