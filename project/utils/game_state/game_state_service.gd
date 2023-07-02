@@ -191,7 +191,7 @@ func set_global_state_value(key: String, value) -> void:
 Connected to scene tree's node_added signal.  If the node is a scene, load game state for it
 """
 func _on_scene_tree_node_added(node : Node) -> void:
-	if node.get_parent() != get_tree().root:
+	if node != get_tree().current_scene:
 		return
 	_handle_scene_load(node)
 

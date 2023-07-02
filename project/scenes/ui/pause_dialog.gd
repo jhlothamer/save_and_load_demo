@@ -54,6 +54,4 @@ func _input(event):
 
 func _get_screenshot() -> Image:
 	var image = get_viewport().get_texture().get_image()
-	var new_size = image.get_size() * .3
-	image.resize(new_size.x, new_size.y, Image.INTERPOLATE_BILINEAR)
 	return image

@@ -39,8 +39,6 @@ func _send_autosave_event(on: bool):
 func _save_thread_func(data: Array) -> void:
 	_send_autosave_event(true)
 	var screenshot: Image = data[0]
-	var new_size = screenshot.get_size() * .3
-	screenshot.resize(new_size.x, new_size.y, Image.INTERPOLATE_BILINEAR)
 	SaveGameDlg.save_checkpoint(screenshot)
 	var thread: Thread = data[1]
 	_send_autosave_event(false)

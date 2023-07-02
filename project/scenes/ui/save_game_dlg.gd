@@ -2,6 +2,7 @@ class_name SaveGameDlg
 extends ConfirmationDialog
 
 const SAVE_GAME_FOLDER = "user://saved_games"
+const MAX_SCREENSHOT_SIZE = Vector2(307, 180)
 
 @onready var _texture_rect: TextureRect = $MarginContainer/VBoxContainer/TextureRect
 
@@ -34,8 +35,15 @@ func _on_SaveGame_confirmed():
 
 
 
+static func _resize_screenshot(screenshot: Image) -> void:
+	var size = screenshot.get_size()
+	if size.x <= MAX_SCREENSHOT_SIZE.x and size.y <= MAX_SCREENSHOT_SIZE.y:
+		return
+	screenshot.resize(MAX_SCREENSHOT_SIZE.x, MAX_SCREENSHOT_SIZE.y,Image.INTERPOLATE_BILINEAR)
+
+
 static func _save(screenshot: Image, checkpoint: bool):
-	pass
+	_resize_screenshot(screenshot)
 	DirAccess.make_dir_recursive_absolute(SAVE_GAME_FOLDER)
 	var date_string = _get_date_time_string()
 	if checkpoint:
