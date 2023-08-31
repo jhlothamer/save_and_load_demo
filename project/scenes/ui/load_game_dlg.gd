@@ -7,7 +7,6 @@ extends ConfirmationDialog
 
 func _ready():
 	visible = false
-	get_cancel_button().connect("pressed", Callable(self, "_on_close_cancel_pressed"))
 
 
 func _get_saved_game_files():
@@ -35,11 +34,10 @@ func _refresh_list():
 		_item_list.select(0)
 		_on_ItemList_item_selected(0)
 
-func show_modal(exclusive: bool = false) -> void:
-	
+func show_modal() -> void:
 	_refresh_list()
-	
 	popup_centered()
+
 
 func _on_ItemList_item_selected(index):
 	var base_file_name = _item_list.get_item_text(index)
@@ -58,5 +56,5 @@ func _on_LoadGameDlg_confirmed():
 		var index = selected[0]
 		var base_file_name = _item_list.get_item_text(index)
 		var save_file_name = SaveGameDlg.SAVE_GAME_FOLDER + "/" + base_file_name + ".json"
-		GameStateService.load(save_file_name, TransitionMgr.transition_to)
+		GameStateService.load_game_state(save_file_name, TransitionMgr.transition_to)
 

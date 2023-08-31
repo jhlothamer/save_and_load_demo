@@ -1,7 +1,7 @@
 extends Node
 
 signal state_load_completed()
-
+signal new_game_state_initialized()
 
 var _game_state_default := {
 	"meta_data": {
@@ -28,17 +28,18 @@ var _skip_next_scene_transition_save := false
 
 
 func _ready():
-	# monitor when scene is about to be changed
-	var result = TransitionMgr.connect("scene_transitioning", Callable(self, "_on_scene_transitioning"))
-	if result != OK:
-		printerr("GameStateService: could not connect to TransistionMgr scene_transitioning signal!")
 	# monitor whenever a node is added in the tree - we can tell when a new scene is loaded this way
-	result = get_tree().connect("node_added", Callable(self, "_on_scene_tree_node_added"))
-	if result != OK:
+	if OK != get_tree().connect("node_added", Callable(self, "_on_scene_tree_node_added")):
 		printerr("GameStateService: could not connect to scene tree node_added signal!")
 	
-	# the main scene has already been added to the tree at this point - so process it now
-	_on_scene_tree_node_added(get_tree().current_scene)
+	var current_scene = get_tree().current_scene
+	if current_scene != null:
+		_on_scene_tree_node_added(current_scene)
+	
+	var transition_mgr = get_tree().root.get_node_or_null("TransitionMgr")
+	if transition_mgr == null:
+		return
+	transition_mgr.connect("scene_transitioning", on_scene_transitioning)
 
 
 """
@@ -47,7 +48,8 @@ Creates a json file with the raw game state dictionary data.  This is used for d
 func dump_game_state() -> void:
 	var file_name = "user://game_state_dump_%s.json" % _get_date_time_string()
 	var json_string = JSON.stringify(_game_state, "\t")
-
+	var f = FileAccess.open(file_name, FileAccess.WRITE)
+	f.store_string(json_string)
 
 
 """
@@ -56,7 +58,7 @@ Returns JSON string of current game state.
 func get_game_state_string(refresh_state: bool = false) -> String:
 	if refresh_state:
 		#fake a scene transition to force game state to be updated
-		_on_scene_transitioning("")
+		on_scene_transitioning("")
 	return JSON.stringify(_game_state, "\t")
 
 """
@@ -73,7 +75,7 @@ func get_global_state_value(key: String):
 Loads game state data from given file path.  If loading is successful,
 calls given func ref for scene transition if given.
 """
-func load(path: String, scene_transition_func: Callable) -> bool:
+func load_game_state(path: String, scene_transition_func: Callable) -> bool:
 	if !FileAccess.file_exists(path):
 		printerr("GameStateService: File does not exist: path %s" % path)
 		return false
@@ -104,41 +106,13 @@ func load(path: String, scene_transition_func: Callable) -> bool:
 		
 	return true
 
-# WARNING: loading resource file can allow code to be executed
-# ALSO: this function has not been converted to Godot 4
-#func _load_unsafe(path: String, scene_transition_func: FuncRef) -> bool:
-#	if !ResourceLoader.exists(path):
-#		printerr("GameStateService: File does not exist: path %s" % path)
-#		return false
-#
-#	var save_file_hash = _get_file_content_hash(path)
-#	var saved_hash = _get_save_file_hash(path)
-#
-#	if save_file_hash != saved_hash:
-#		printerr("GameStateService: Save file is corrupt or has been modified: path %s" % path)
-#		return false
-#
-#	var game_save_data: GameSaveData = ResourceLoader.load(path)
-#	if !game_save_data:
-#		printerr("GameStateService: File does not contain value game save data: path %s" % path)
-#		return false
-#
-#	_game_state = game_save_data.data
-#	_skip_next_scene_transition_save = true
-#
-#	#return path to scene that was current for save file
-#	# this lets caller handle the transition
-#	var scene_path = _game_state["meta_data"]["current_scene_path"]
-#	if scene_transition_func:
-#		scene_transition_func.call_func(scene_path)
-#	return true
-
 
 """
 resets game state for a new game
 """
 func new_game() -> void:
 	_game_state = _game_state_default.duplicate(true)
+	new_game_state_initialized.emit()
 
 
 """
@@ -146,9 +120,9 @@ Saves game state to the given file path.  Another file with an md5 hash
 will be saved along with the file with the extention ".dat".  The hash will
 be used during load() to detect if the save game file has been altered.
 """
-func save(path: String) -> bool:
+func save_game_state(path: String) -> bool:
 	#fake a scene transition to force game state to be updated
-	_on_scene_transitioning("")
+	on_scene_transitioning("")
 
 	_game_state["game_data_version"] = "1.0"
 
@@ -162,21 +136,6 @@ func save(path: String) -> bool:
 	_save_save_file_hash(path)
 
 	return true
-
-# WARNING - arbitrary code can be executed from a resource file when it is loaded
-#func _save_unsafe(path: String) -> bool:
-#	var game_save_data := GameSaveData.new()
-#
-#	#fake a scene transition to force game state to be updated
-#	_on_scene_transitioning("")
-#	game_save_data.data = _game_state
-#
-#	var error = ResourceSaver.save(path, game_save_data)
-#	if error != OK:
-#		printerr("GameStateService: Could not save game data to file: path %s" % path)
-#		return false
-#	_save_save_file_hash(path)
-#	return true
 
 
 """
@@ -334,7 +293,7 @@ func _instance_scene(parent: Node, node_data: Dictionary, id: String) -> void:
 	if game_state_helper != null:
 		if game_state_helper.debug:
 			breakpoint
-		game_state_helper.set_data(id, node_data)
+		game_state_helper.set_data(node_data)
 	else:
 		#no game state helper found - remove child and complain
 		parent.remove_child(instance)
@@ -383,7 +342,7 @@ func _save_freed_save_and_load(data: Dictionary) -> void:
 Handler for when a new scene is about to be transitioned to.  Game state for
 the current scene is saved into the game state.
 """
-func _on_scene_transitioning(new_scene_path: String) -> void:
+func on_scene_transitioning(_new_scene_path) -> void:
 	# skip the transition when loading a saved game
 	if _skip_next_scene_transition_save:
 		_skip_next_scene_transition_save = false

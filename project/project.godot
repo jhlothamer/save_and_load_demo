@@ -17,21 +17,25 @@ config/icon="res://icon.png"
 
 [autoload]
 
-TransitionMgr="*res://utils/transition_mgr.tscn"
-GameStateService="*res://utils/game_state/game_state_service.gd"
 InventoryMgr="*res://utils/inventory_mgr.tscn"
 GameInit="*res://utils/game_init.gd"
 FullScreenMgr="*res://utils/full_screen_mgr.tscn"
+GameStateService="*res://addons/game_state_helper/game_state_service.gd"
+TransitionMgr="*res://addons/transition_mgr/transition_mgr.tscn"
 
 [debug]
 
-gdscript/warnings/enable=false
+gdscript/warnings/exclude_addons=false
 
 [display]
 
 window/size/viewport_width=1024
 window/size/viewport_height=600
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/game_state_helper/plugin.cfg", "res://addons/transition_mgr/plugin.cfg")
 
 [input]
 

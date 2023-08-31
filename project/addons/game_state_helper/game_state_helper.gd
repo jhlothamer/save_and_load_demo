@@ -1,5 +1,5 @@
 @tool
-@icon("res://utils/game_state/icon_game_state_helper.svg")
+@icon("res://addons/game_state_helper/icon_game_state_helper.svg")
 class_name GameStateHelper
 extends Node
 
@@ -24,9 +24,9 @@ When the save file is re-loaded, the GameStateHelper node/class will free it aga
 class SaveFreedInstancedChildScene:
 	var id: String
 	var node_path: String
-	func _init(save_id: String, node_path: String) -> void:
-		self.id = save_id
-		self.node_path = node_path
+	func _init(save_id: String, save_node_path: String) -> void:
+		id = save_id
+		node_path = save_node_path
 	func save_data(data: Dictionary) -> void:
 		var node_data := {}
 		# add node data to data dictionary
@@ -140,7 +140,7 @@ func load_data(data: Dictionary) -> void:
 """
 Like load_data but for instanced nodes.
 """
-func set_data(saved_id: String, node_data: Dictionary) -> void:
+func set_data(node_data: Dictionary) -> void:
 	var parent = get_parent()
 	# set parent property values
 	for prop_name in save_properties:

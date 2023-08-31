@@ -2,7 +2,7 @@ class_name SaveGameDlg
 extends ConfirmationDialog
 
 const SAVE_GAME_FOLDER = "user://saved_games"
-const MAX_SCREENSHOT_SIZE = Vector2(307, 180)
+const MAX_SCREENSHOT_SIZE = Vector2i(307, 180)
 
 @onready var _texture_rect: TextureRect = $MarginContainer/VBoxContainer/TextureRect
 
@@ -31,13 +31,13 @@ static func _get_date_time_string():
 
 
 func _on_SaveGame_confirmed():
-	_save(_save_game_image, false)
+	SaveGameDlg._save(_save_game_image, false)
 
 
 
 static func _resize_screenshot(screenshot: Image) -> void:
-	var size = screenshot.get_size()
-	if size.x <= MAX_SCREENSHOT_SIZE.x and size.y <= MAX_SCREENSHOT_SIZE.y:
+	var screenshot_size = screenshot.get_size()
+	if screenshot_size.x <= MAX_SCREENSHOT_SIZE.x and screenshot_size.y <= MAX_SCREENSHOT_SIZE.y:
 		return
 	screenshot.resize(MAX_SCREENSHOT_SIZE.x, MAX_SCREENSHOT_SIZE.y,Image.INTERPOLATE_BILINEAR)
 
@@ -49,7 +49,7 @@ static func _save(screenshot: Image, checkpoint: bool):
 	if checkpoint:
 		date_string += "_autosave"
 	var save_game_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".json"
-	if GameStateService.save(save_game_file_name):
+	if GameStateService.save_game_state(save_game_file_name):
 		var image_file_name = SAVE_GAME_FOLDER + "/" + date_string + ".png"
 		screenshot.save_png(image_file_name)
 

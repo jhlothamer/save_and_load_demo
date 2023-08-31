@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource path="res://assets/images/environment/bouncer.png" type="Texture2D" id=1]
-[ext_resource path="res://utils/game_state/game_state_helper.gd" type="Script" id=2]
-[ext_resource path="res://scenes/bouncer/bouncer.gd" type="Script" id=3]
+[ext_resource type="Texture2D" uid="uid://bba3nujc1q4h5" path="res://assets/images/environment/bouncer.png" id="1"]
+[ext_resource type="Script" path="res://addons/game_state_helper/game_state_helper.gd" id="2"]
+[ext_resource type="Script" path="res://scenes/bouncer/bouncer.gd" id="3"]
 
 [sub_resource type="RectangleShape2D" id=1]
 size = Vector2( 32, 32 )

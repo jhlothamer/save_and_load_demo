@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bbtucwcrm3ai2"]
 
-[ext_resource type="Script" path="res://utils/transition_mgr.gd" id="1"]
+[ext_resource type="Script" path="res://addons/transition_mgr/transition_mgr.gd" id="1_3w3bw"]
 
 [sub_resource type="Animation" id="Animation_ywbuj"]
 length = 0.001
@@ -56,7 +56,7 @@ _data = {
 
 [node name="transition_mgr" type="CanvasLayer"]
 process_mode = 3
-script = ExtResource("1")
+script = ExtResource("1_3w3bw")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(3840, 2160)

@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource path="res://assets/images/environment/room_low_wall_vertical.png" type="Texture2D" id=1]
-[ext_resource path="res://utils/game_state/game_state_helper.gd" type="Script" id=2]
+[ext_resource type="Texture2D" uid="uid://c0m07qxwoh4m2" path="res://assets/images/environment/room_low_wall_vertical.png" id="1"]
+[ext_resource type="Script" path="res://addons/game_state_helper/game_state_helper.gd" id="2"]
 
 [sub_resource type="RectangleShape2D" id=1]
 size = Vector2( 77.1269, 171.383 )
