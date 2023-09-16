@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://utils/game_state/game_state_helper.gd" type="Script" id=1]
+[ext_resource path="res://addons/game_state_helper/game_state_helper.gd" type="Script" id=1]
 [ext_resource path="res://utils/inventory_mgr.gd" type="Script" id=2]
 
 [node name="InventoryMgr" type="Node"]

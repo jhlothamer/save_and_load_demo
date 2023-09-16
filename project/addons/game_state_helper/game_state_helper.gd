@@ -1,6 +1,6 @@
-class_name GameStateHelper, "res://utils/game_state/icon_game_state_helper.svg"
-extends Node
 tool
+class_name GameStateHelper, "res://addons/game_state_helper/icon_game_state_helper.svg"
+extends Node
 
 signal loading_data(data)
 signal saving_data(data)
@@ -23,9 +23,9 @@ When the save file is re-loaded, the GameStateHelper node/class will free it aga
 class SaveFreedInstancedChildScene:
 	var id: String
 	var node_path: String
-	func _init(save_id: String, node_path: String) -> void:
-		self.id = save_id
-		self.node_path = node_path
+	func _init(save_id: String, save_node_path: String) -> void:
+		id = save_id
+		node_path = save_node_path
 	func save_data(data: Dictionary) -> void:
 		var node_data := {}
 		# add node data to data dictionary
@@ -35,7 +35,7 @@ class SaveFreedInstancedChildScene:
 
 
 # list of property names to save
-export (Array, String) var save_properties := []
+export (Array, String) var save_properties:= []
 # check this property (make true) if the parent is dynamically created during your game
 export var dynamic_instance := false setget _set_dynamic_instance
 # causes the data to be saved/loaded to the global game state dictionary
@@ -75,7 +75,7 @@ func _enter_tree():
 """
 Saves property values from it's parent to the given data dictionary
 """
-func save_data(var data: Dictionary) -> void:
+func save_data(data: Dictionary) -> void:
 	var parent = get_parent()
 	var id = str(parent.get_path())
 
@@ -97,7 +97,7 @@ func save_data(var data: Dictionary) -> void:
 	
 	# add property values to node data
 	for prop_name in save_properties:
-		node_data[prop_name] = parent.get(prop_name)
+		node_data[prop_name] = parent.get_indexed(prop_name)
 	
 	# emit signal - allows parent to have it's own save code/logic
 	emit_signal("saving_data", node_data)
@@ -106,7 +106,7 @@ func save_data(var data: Dictionary) -> void:
 """
 Loads property values from data dictionary and sets them on parent
 """
-func load_data(var data: Dictionary) -> void:
+func load_data(data: Dictionary) -> void:
 	var parent = get_parent()
 	var id = str(parent.get_path())
 	
@@ -130,7 +130,7 @@ func load_data(var data: Dictionary) -> void:
 	# set parent property values
 	for prop_name in save_properties:
 		if node_data.has(prop_name):
-			parent.set(prop_name, node_data[prop_name])
+			parent.set_indexed(prop_name, node_data[prop_name])
 	
 	# emit signal - allows parent o have it's own load code/logic
 	emit_signal("loading_data", node_data)
@@ -139,7 +139,7 @@ func load_data(var data: Dictionary) -> void:
 """
 Like load_data but for instanced nodes.
 """
-func set_data(saved_id: String, var node_data: Dictionary) -> void:
+func set_data(node_data: Dictionary) -> void:
 	var parent = get_parent()
 	# set parent property values
 	for prop_name in save_properties:

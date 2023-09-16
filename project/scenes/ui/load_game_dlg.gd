@@ -60,7 +60,7 @@ func _on_LoadGameDlg_confirmed():
 		var base_file_name = _item_list.get_item_text(index)
 		var save_file_name = SaveGameDlg.SAVE_GAME_FOLDER + "/" + base_file_name + ".json"
 		var transition_func := funcref(TransitionMgr, "transition_to")
-		GameStateService.load(save_file_name, transition_func)
+		GameStateService.load_game_state(save_file_name, transition_func)
 
 
 func _on_close_cancel_pressed():

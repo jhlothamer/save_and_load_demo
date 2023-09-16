@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/themes/dialog_theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/images/ui/saving_icon.png" type="Texture" id=2]
 [ext_resource path="res://scenes/environment/checkpoint.gd" type="Script" id=3]
-[ext_resource path="res://utils/game_state/game_state_helper.gd" type="Script" id=4]
+[ext_resource path="res://addons/game_state_helper/game_state_helper.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )

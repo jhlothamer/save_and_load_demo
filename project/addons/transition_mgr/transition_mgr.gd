@@ -19,11 +19,10 @@ func _ready():
 	if !ProjectSettings.has_setting("global/transition_mgr_default_speed"):
 		return
 	var temp = ProjectSettings.get_setting("global/transition_mgr_default_speed")
-	if !temp:
-		print("TransitionMgr: no Transition Mgr Default Speed project setting found.  Using default speed of .5 seconds.")
+	if temp == null:
 		return
 	if temp <= 0.0:
-		print("TransitionMgr: default speed must be > 0.0.  Using default speed of .5 seconds.")
+		printerr("TransitionMgr: default speed must be > 0.0.  Using default speed of .5 seconds.")
 		return
 	_default_speed = temp
 

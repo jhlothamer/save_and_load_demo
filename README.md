@@ -16,6 +16,19 @@ This demo goes beyond the ordinary capture of node property values and handles s
 
 With these abilities it's possible to create much larger and richer games consisting of multiple scenes. And of course players can save their progress and restart where they left off later.
 
+## Game State Helper, Transition Manager Addons (9/16/23)
+
+This demo has been updated so that the Game State Helper service and other related scripts/nodes are in the addons folder as an addon.  This makes it easier for developers to pull the service from this demo and into their own projects.  The same has been done to the Transisiton Manager autoload which is used for a fade-out/fade-in effect when switching between scenes.  You are of course free to use this addon as well as any other code you find in this demo.
+
+### Not Using Transition Manager Addon?  READ THIS!
+
+If you do not use the Transition Manager from this project, you must call GameStateService.on_scene_transitioning() before calling the function on SceneTree to change scene.  This causes the service to collect the state of the current scene.  (Note: it is not saved to disk at this time, but is kept in memory.)  This state will be applied to the scene again when it is reloaded.
+
+For example:
+
+    GameStateService.on_scene_transitioning("res://new_scene.tscn")
+    get_tree().change_scene_to_file("res://new_scene.tscn")
+
 ## How Does It Work
 
 The demo has two central scripts/nodes to do most of the work. The first is an autoload singleton called **GameStateService**. This singleton detects when scenes switched and manages the saving of state from the old scene and the loading of state for the new scene. The second script/node is the **GameStateHelper**. This node is added as a child to any sub-scene/component in the game we want to save game state for. The **GameStateService** looks for these helper nodes and calls into them. The helper nodes also have signals, saving_data and loading_data, that the parent node can connect to and do it's own saving and loading logic.

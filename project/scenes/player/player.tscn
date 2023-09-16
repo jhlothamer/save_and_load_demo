@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/images/player/player_back.png" type="Texture" id=6]
 [ext_resource path="res://scenes/components/interaction/interaction_area_2d.gd" type="Script" id=7]
 [ext_resource path="res://assets/images/player/player_shadow.png" type="Texture" id=8]
-[ext_resource path="res://utils/game_state/game_state_helper.gd" type="Script" id=9]
+[ext_resource path="res://addons/game_state_helper/game_state_helper.gd" type="Script" id=9]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {

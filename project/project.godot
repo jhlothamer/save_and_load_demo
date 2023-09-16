@@ -9,10 +9,10 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "Reference",
 "class": "GameStateHelper",
 "language": "GDScript",
-"path": "res://utils/game_state/game_state_helper.gd"
+"path": "res://addons/game_state_helper/game_state_helper.gd"
 }, {
 "base": "CanvasLayer",
 "class": "Hud",
@@ -45,7 +45,7 @@ _global_script_classes=[ {
 "path": "res://scenes/ui/save_game_dlg.gd"
 } ]
 _global_script_class_icons={
-"GameStateHelper": "res://utils/game_state/icon_game_state_helper.svg",
+"GameStateHelper": "",
 "Hud": "",
 "InteractableArea2D": "",
 "InteractionArea2D": "",
@@ -62,11 +62,11 @@ config/icon="res://icon.png"
 
 [autoload]
 
-TransitionMgr="*res://utils/transition_mgr.tscn"
-GameStateService="*res://utils/game_state/game_state_service.gd"
 InventoryMgr="*res://utils/inventory_mgr.tscn"
 GameInit="*res://utils/game_init.gd"
 FullScreenMgr="*res://utils/full_screen_mgr.tscn"
+TransitionMgr="*res://addons/transition_mgr/transition_mgr.tscn"
+GameStateService="*res://addons/game_state_helper/game_state_service.gd"
 
 [debug]
 
@@ -75,6 +75,10 @@ gdscript/warnings/enable=false
 [display]
 
 window/stretch/mode="2d"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/game_state_helper/plugin.cfg", "res://addons/transition_mgr/plugin.cfg" )
 
 [input]
 
