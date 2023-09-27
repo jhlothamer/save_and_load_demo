@@ -20,7 +20,6 @@ func _on_Checkpoint_body_entered(body):
 
 func _start_checkpoint_save():
 	self.triggered = true
-	var viewport := get_viewport()
 	await RenderingServer.frame_post_draw
 	var screenshot = get_viewport().get_texture().get_image()
 	var thread := Thread.new()
@@ -40,6 +39,5 @@ func _save_thread_func(data: Array) -> void:
 	_send_autosave_event(true)
 	var screenshot: Image = data[0]
 	SaveGameDlg.save_checkpoint(screenshot)
-	var thread: Thread = data[1]
 	_send_autosave_event(false)
 

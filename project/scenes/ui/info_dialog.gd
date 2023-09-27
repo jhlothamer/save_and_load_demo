@@ -18,7 +18,7 @@ func _on_InfoDialog_confirmed():
 	get_tree().paused = false
 
 
-func show_modal(exclusive: bool = false) -> void:
+func show_modal() -> void:
 	get_tree().paused = true
 	show()
 	

@@ -12,7 +12,6 @@ var _save_game_image: Image
 
 func _ready():
 	visible = false
-	get_cancel_button().connect("pressed", Callable(self, "_on_close_cancel_pressed"))
 
 
 func show_save_dlg(save_img: Image) -> void:

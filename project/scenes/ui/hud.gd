@@ -15,7 +15,7 @@ func _ready():
 
 func show_info_dlg(info_text: String) -> void:
 	_info_dlg.info_text = info_text
-	_info_dlg.show_modal(true)
+	_info_dlg.show_modal()
 
 
 func show_message(msg: String) -> void:
@@ -24,7 +24,7 @@ func show_message(msg: String) -> void:
 
 
 func _on_ViewGameStateBtn_pressed():
-	_game_state_dlg.show_modal(true)
+	_game_state_dlg.show_modal()
 
 
 func _on_MessageTimer_timeout():

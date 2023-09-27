@@ -17,7 +17,7 @@ func _how_many_things_needed_to_unlock() -> int:
 	return count
 
 
-func _on_NorthRoomExit_locked_room_exit_interacted_with(room_exit):
+func _on_NorthRoomExit_locked_room_exit_interacted_with(_room_exit):
 	var things_needed_count = _how_many_things_needed_to_unlock()
 	if things_needed_count == 0:
 		_north_room_exit.locked = false

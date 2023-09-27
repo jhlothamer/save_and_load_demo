@@ -13,7 +13,6 @@ signal locked_room_exit_interacted_with(room_exit)
 
 
 @onready var _door: Sprite2D = $room_exit/door
-@onready var _collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var _player_enter_position: Marker2D = $PlayerEnterPosition
 @onready var _door_interact_indicator: Sprite2D = $room_exit/door_interact_indicator
 @onready var _room_exit: Sprite2D = $room_exit
@@ -59,13 +58,13 @@ func _on_ExitDetectArea_body_entered(body):
 	TransitionMgr.transition_to(destination_level_scene)
 
 
-func _on_InteractableArea2D_InteractionIndicatorStateChanged(interactable, indicator_visible):
+func _on_InteractableArea2D_InteractionIndicatorStateChanged(_interactable, indicator_visible):
 	if !locked or !enabled:
 		return
 	_door_interact_indicator.visible = indicator_visible
 
 
-func _on_InteractableArea2D_InteractionStarted(interactable, interactor):
+func _on_InteractableArea2D_InteractionStarted(_interactable, _interactor):
 	if !locked or !enabled:
 		return
 	emit_signal("locked_room_exit_interacted_with", self)

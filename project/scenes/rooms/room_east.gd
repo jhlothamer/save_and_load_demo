@@ -1,6 +1,5 @@
 extends "res://scenes/rooms/room.gd"
 
-@onready var _remove_barrier_switch := $Node2D/RemoveBarrierFloorSwitch
 @onready var _low_wall := $LowWall
 
 

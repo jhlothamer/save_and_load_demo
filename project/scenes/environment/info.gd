@@ -13,9 +13,9 @@ func _ready():
 	_interact_indicator.visible = false
 
 
-func _on_InteractableArea2D_InteractionIndicatorStateChanged(interactable, indicator_visible):
+func _on_InteractableArea2D_InteractionIndicatorStateChanged(_interactable, indicator_visible):
 	_interact_indicator.visible = indicator_visible
 
 
-func _on_InteractableArea2D_InteractionStarted(interactable, interactor):
+func _on_InteractableArea2D_InteractionStarted(_interactable, _interactor):
 	emit_signal("info_requested", bb_code_info_msg)

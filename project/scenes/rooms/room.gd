@@ -61,6 +61,6 @@ func _on_Info_info_requested(info_msg):
 	_hud.show_info_dlg(info_msg)
 
 
-func _on_NorthRoomExit_locked_room_exit_interacted_with(room_exit):
+func _on_NorthRoomExit_locked_room_exit_interacted_with(_room_exit):
 	pass # Replace with function body.
 

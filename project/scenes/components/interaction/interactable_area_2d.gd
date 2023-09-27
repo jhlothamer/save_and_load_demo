@@ -26,7 +26,7 @@ func can_interact_with(interactor: CharacterBody2D) -> bool:
 	return false
 
 
-func toggle_interact_indicator(show_indicator: bool, body) -> void:
+func toggle_interact_indicator(show_indicator: bool, _body) -> void:
 	if !enabled:
 		return
 	emit_signal("InteractionIndicatorStateChanged", get_parent(), show_indicator)

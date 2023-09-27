@@ -30,14 +30,14 @@ func _ready():
 	_set_triggered(triggered)
 
 
-func _on_InteractableArea2D_InteractionIndicatorStateChanged(interactable, indicator_visible):
+func _on_InteractableArea2D_InteractionIndicatorStateChanged(_interactable, indicator_visible):
 	#once switched/triggered, there's no going back
 	if triggered:
 		return
 	_interaction_indicator.visible = indicator_visible
 
 
-func _on_InteractableArea2D_InteractionStarted(interactable, interactor):
+func _on_InteractableArea2D_InteractionStarted(_interactable, _interactor):
 	#once switched/triggered, there's no going back
 	if triggered:
 		return

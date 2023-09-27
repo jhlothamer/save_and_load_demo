@@ -12,7 +12,7 @@ func _ready():
 #	close_btn.connect("pressed", Callable(self, "_on_RawGameStateDlg_confirmed"))
 
 
-func show_modal(exclusive: bool = false) -> void:
+func show_modal() -> void:
 	_text_edit.text = GameStateService.get_game_state_string(true)
 	get_tree().paused = true
 	popup_centered()
