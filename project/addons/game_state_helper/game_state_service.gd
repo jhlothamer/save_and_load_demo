@@ -3,6 +3,7 @@ extends Node
 signal state_load_completed()
 signal new_game_state_initialized()
 
+
 var _game_state_default := {
 	"meta_data": {
 		"current_scene_path": ""
@@ -128,13 +129,13 @@ func save_game_state(path: String) -> bool:
 
 	var f = FileAccess.open(path, FileAccess.WRITE)
 	if f == null or !f.is_open():
-		printerr("Couldn't hopen file to save to : %s" % path)
+		printerr("Couldn't open file to save to : %s" % path)
 		return false
 	f.store_string(var_to_str(_game_state))
 	f.close()
 
 	_save_save_file_hash(path)
-
+	
 	return true
 
 

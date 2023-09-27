@@ -17,9 +17,6 @@ fill_to = Vector2(0, 1)
 
 [sub_resource type="FontFile" id="3"]
 fallbacks = Array[Font]([ExtResource("1")])
-face_index = null
-embolden = null
-transform = null
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -47,9 +44,6 @@ cache/0/100/0/kerning_overrides/100/0 = Vector2(0, 0)
 
 [sub_resource type="FontFile" id="4"]
 fallbacks = Array[Font]([ExtResource("1")])
-face_index = null
-embolden = null
-transform = null
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -67,9 +61,6 @@ cache/0/40/0/kerning_overrides/40/0 = Vector2(0, 0)
 
 [sub_resource type="FontFile" id="5"]
 fallbacks = Array[Font]([ExtResource("1")])
-face_index = null
-embolden = null
-transform = null
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0

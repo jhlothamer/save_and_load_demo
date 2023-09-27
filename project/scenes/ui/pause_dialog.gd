@@ -27,7 +27,7 @@ func _on_SaveBtn_pressed():
 
 
 func _on_LoadBtn_pressed():
-	_load_game_dlg.show_modal(true)
+	_load_game_dlg.show_modal()
 
 
 func _on_MainMenuBtn_pressed():
