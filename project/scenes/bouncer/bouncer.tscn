@@ -18,7 +18,11 @@ shape = SubResource("1")
 [node name="icon" type="Sprite2D" parent="."]
 texture = ExtResource("1")
 
+[node name="GameStateHelper" type="Node" parent="icon"]
+script = ExtResource("2")
+save_properties = Array[String](["modulate"])
+
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource("2")
-save_properties = Array[String](["global_position", "modulate", "current_direction"])
+save_properties = Array[String](["global_position", "current_direction"])
 dynamic_instance = true

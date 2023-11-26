@@ -11,6 +11,8 @@ signal saving_data(data)
 const NODE_GROUP = "GameStateHelper"
 # parent node path
 const GAME_STATE_KEY_NODE_PATH = "game_state_helper_node_path"
+# owner node path
+const GAME_STATE_KEY_OWNER_NODE_PATH = "game_state_helper_owner_node_path"
 # path to scene file so dynamically instanced nodes can be re-instanced
 const GAME_STATE_KEY_INSTANCE_SCENE = "game_state_helper_dynamic_recreate_scene"
 # flag indicating that an instanced child scene was freed so that is can be re-freed when scene re-loaded
@@ -95,6 +97,8 @@ func save_data(data: Dictionary) -> void:
 	# also used to find parent to instanced scenes
 	if !global:
 		node_data[GAME_STATE_KEY_NODE_PATH] = parent.get_path()
+		if parent.owner:
+			node_data[GAME_STATE_KEY_OWNER_NODE_PATH] = str(parent.owner.get_path())
 	
 	# add property values to node data
 	for prop_name in save_properties:

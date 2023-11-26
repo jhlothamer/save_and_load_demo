@@ -12,7 +12,7 @@ extends CharacterBody2D
 
 func _ready():
 	current_direction = current_direction.normalized()
-
+	_icon.modulate = Color.from_hsv(randf(), 1.0, 1.0, 1.0)
 
 func _physics_process(delta):
 	var col = move_and_collide(current_direction*speed*delta)

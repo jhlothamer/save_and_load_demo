@@ -24,7 +24,7 @@ func _add_bouncer():
 	_bouncers_parent.call_deferred("add_child", bouncer)
 	bouncer.position = _get_spawn_position()
 	bouncer.current_direction = Vector2.RIGHT.rotated(randf()*2.0*PI)
-	bouncer.modulate = Color.from_hsv(randf(), 1.0, 1.0, 1.0)
+#	bouncer.modulate = Color.from_hsv(randf(), 1.0, 1.0, 1.0)
 
 
 func _remove_bouncer():

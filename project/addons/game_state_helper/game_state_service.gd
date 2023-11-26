@@ -211,6 +211,9 @@ func _handle_scene_load(node: Node) -> void:
 	var node_data = scene_data["node_data"]
 	var global_state = _game_state["global"]
 
+	# recreate dynamically instanced nodes
+	_load_dynamic_instanced_nodes(node_data)
+
 	# load data into each helper node
 	for temp in get_tree().get_nodes_in_group(GameStateHelper.NODE_GROUP):
 		var helper: GameStateHelper = temp
@@ -221,9 +224,6 @@ func _handle_scene_load(node: Node) -> void:
 		else:
 			helper.load_data(node_data)
 	
-	# recreate dynamically instanced nodes
-	_load_dynamic_instanced_nodes(node_data)
-	
 	# signal that load is complete - sometimes scenes need to do extra logic after state is loaded
 	emit_signal("state_load_completed")
 
@@ -232,8 +232,10 @@ func _handle_scene_load(node: Node) -> void:
 Creates new instances of any dynamicly instanced node and loads their saved data.
 """
 func _load_dynamic_instanced_nodes(data: Dictionary) -> void:
-	var dynamic_instanced_node_ids := []
+	# map old node ids to new ones
+	var dynamic_instanced_node_ids := {}
 	
+	# re-instance dynamic scenes
 	for id in data.keys():
 		if typeof(data[id]) != TYPE_DICTIONARY:
 			continue
@@ -246,13 +248,38 @@ func _load_dynamic_instanced_nodes(data: Dictionary) -> void:
 		if parent == null:
 			printerr("GameStateService: could not get parent for dynamic instanced node: %s" % node_data[GameStateHelper.GAME_STATE_KEY_NODE_PATH])
 			continue
-		dynamic_instanced_node_ids.append(id)
-		_instance_scene(parent, node_data, id)
+		var instance := _instance_scene(parent, node_data, id)
+		var updated_id := str(instance.get_path())
+		if updated_id == id:
+			# if the re-instanced scene has the same path - we don't need to update any id's in the node data
+			continue
+		# keep a map of the old id to the new id
+		dynamic_instanced_node_ids[id] = updated_id
+		# add node data back to the data with the new id
+		data[updated_id] = node_data
+	
+	# keep a list of the old id's - to be removed from the data dictionary
+	var old_ids := dynamic_instanced_node_ids.keys()
+	
+	# update id's of nodes that are part of a dynamic scene
+	for id in data.keys():
+		if typeof(data[id]) != TYPE_DICTIONARY:
+			continue
+		var node_data: Dictionary = data[id]
+		if !node_data.has(GameStateHelper.GAME_STATE_KEY_OWNER_NODE_PATH):
+			continue
+		var owner_node_path = node_data[GameStateHelper.GAME_STATE_KEY_OWNER_NODE_PATH]
+		if !dynamic_instanced_node_ids.has(owner_node_path) or \
+			owner_node_path == dynamic_instanced_node_ids[owner_node_path]:
+			continue
+		var updated_id = id.replace(owner_node_path, dynamic_instanced_node_ids[owner_node_path])
+		data[updated_id] = node_data
+		old_ids.append(id)
 	
 	# remove dynamic instanced node data from game state
 	# dynamic node paths/ids are different each time they are instanced
 	# if this is not done they dynamic instances will double on each load!
-	for id in dynamic_instanced_node_ids:
+	for id in old_ids:
 		data.erase(id)
 
 
@@ -283,32 +310,15 @@ func _get_scene_resource(resource_path: String) -> PackedScene:
 """
 Actually instances a scene, adds it to the node tree and calls it's GameStateHelper node to load data
 """
-func _instance_scene(parent: Node, node_data: Dictionary, id: String) -> void:
+func _instance_scene(parent: Node, node_data: Dictionary, id: String) -> Node:
 	var resource := _get_scene_resource(node_data[GameStateHelper.GAME_STATE_KEY_INSTANCE_SCENE])
 	if resource == null:
 		printerr("GameStateService: Could not instance node:  resource not found.   Save file id: %s, scene path: %s" % [id, node_data[GameStateHelper.GAME_STATE_KEY_INSTANCE_SCENE]])
 		return
 	var instance = resource.instantiate()
 	parent.add_child(instance)
-	var game_state_helper =  _get_game_state_helper(instance)
-	if game_state_helper != null:
-		if game_state_helper.debug:
-			breakpoint
-		game_state_helper.set_data(node_data)
-	else:
-		#no game state helper found - remove child and complain
-		parent.remove_child(instance)
-		printerr("GameStateService: Instanced node had no GameStateHelper node: save file id: %s, scene path: %s" % [id, node_data[GameStateHelper.GAME_STATE_KEY_INSTANCE_SCENE]])
 
-
-"""
-Finds the GameStateHelper node
-"""
-func _get_game_state_helper(parent: Node):
-	for c in parent.get_children():
-		if c.is_in_group(GameStateHelper.NODE_GROUP):
-			return c
-	return null
+	return instance
 
 
 """
