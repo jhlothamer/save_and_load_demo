@@ -6,7 +6,8 @@ signal new_game_state_initialized()
 
 var _game_state_default := {
 	"meta_data": {
-		"current_scene_path": ""
+		"current_scene_path": "",
+		"data_format_version": "1.0"
 	},
 	"global": {},
 	"scene_data": {},
@@ -14,7 +15,8 @@ var _game_state_default := {
 
 var _game_state := {
 	"meta_data": {
-		"current_scene_path": ""
+		"current_scene_path": "",
+		"data_format_version": "1.0"
 	},
 	"global": {},
 	"scene_data": {},
@@ -96,6 +98,8 @@ func load_game_state(path: String, scene_transition_func: Callable) -> bool:
 	_game_state = str_to_var(f.get_as_text())
 
 	f.close()
+	
+	_data_format_version_migration()
 
 	_skip_next_scene_transition_save = true
 
@@ -232,10 +236,6 @@ func _handle_scene_load(node: Node) -> void:
 Creates new instances of any dynamicly instanced node and loads their saved data.
 """
 func _load_dynamic_instanced_nodes(data: Dictionary) -> void:
-	# map old node ids to new ones
-	var dynamic_instanced_node_ids := {}
-	
-	# re-instance dynamic scenes
 	for id in data.keys():
 		if typeof(data[id]) != TYPE_DICTIONARY:
 			continue
@@ -248,40 +248,7 @@ func _load_dynamic_instanced_nodes(data: Dictionary) -> void:
 		if parent == null:
 			printerr("GameStateService: could not get parent for dynamic instanced node: %s" % node_data[GameStateHelper.GAME_STATE_KEY_NODE_PATH])
 			continue
-		var instance := _instance_scene(parent, node_data, id)
-		var updated_id := str(instance.get_path())
-		if updated_id == id:
-			# if the re-instanced scene has the same path - we don't need to update any id's in the node data
-			continue
-		# keep a map of the old id to the new id
-		dynamic_instanced_node_ids[id] = updated_id
-		# add node data back to the data with the new id
-		data[updated_id] = node_data
-	
-	# keep a list of the old id's - to be removed from the data dictionary
-	var old_ids := dynamic_instanced_node_ids.keys()
-	
-	# update id's of nodes that are part of a dynamic scene
-	for id in data.keys():
-		if typeof(data[id]) != TYPE_DICTIONARY:
-			continue
-		var node_data: Dictionary = data[id]
-		if !node_data.has(GameStateHelper.GAME_STATE_KEY_OWNER_NODE_PATH):
-			continue
-		var owner_node_path = node_data[GameStateHelper.GAME_STATE_KEY_OWNER_NODE_PATH]
-		if !dynamic_instanced_node_ids.has(owner_node_path) or \
-			owner_node_path == dynamic_instanced_node_ids[owner_node_path]:
-			continue
-		var updated_id = id.replace(owner_node_path, dynamic_instanced_node_ids[owner_node_path])
-		data[updated_id] = node_data
-		old_ids.append(id)
-	
-	# remove dynamic instanced node data from game state
-	# dynamic node paths/ids are different each time they are instanced
-	# if this is not done they dynamic instances will double on each load!
-	for id in old_ids:
-		data.erase(id)
-
+		_instance_scene(parent, node_data, id)
 
 
 """
@@ -310,15 +277,16 @@ func _get_scene_resource(resource_path: String) -> PackedScene:
 """
 Actually instances a scene, adds it to the node tree and calls it's GameStateHelper node to load data
 """
-func _instance_scene(parent: Node, node_data: Dictionary, id: String) -> Node:
+func _instance_scene(parent: Node, node_data: Dictionary, id: String) -> void:
 	var resource := _get_scene_resource(node_data[GameStateHelper.GAME_STATE_KEY_INSTANCE_SCENE])
 	if resource == null:
 		printerr("GameStateService: Could not instance node:  resource not found.   Save file id: %s, scene path: %s" % [id, node_data[GameStateHelper.GAME_STATE_KEY_INSTANCE_SCENE]])
 		return
 	var instance = resource.instantiate()
+	var path := NodePath(id)
+	var node_name = path.get_name(path.get_name_count() - 1)
+	instance.name = node_name
 	parent.add_child(instance)
-
-	return instance
 
 
 """
@@ -366,7 +334,8 @@ func on_scene_transitioning(_new_scene_path) -> void:
 		return
 
 	var scene_data = _get_scene_data(scene_id, current_scene)
-	var node_data = scene_data["node_data"]
+	var node_data := {}
+	scene_data["node_data"] = node_data
 	var global_state = _game_state["global"]
 	
 	# save state
@@ -431,7 +400,41 @@ func _save_save_file_hash(file_path: String) -> void:
 	f.close()
 
 
+func _data_format_version_migration() -> void:
+	if !_game_state["meta_data"].has("data_format_version"):
+		_data_format_version_mgration_pre_v1()
 
 
-
+func _data_format_version_mgration_pre_v1() -> void:
+	print("converting save game data from pre v1 to v1")
+	_game_state["meta_data"]["data_format_version"] = "1.0"
+	var scene_data:Dictionary = _game_state["scene_data"]
+	for scene_data_key in scene_data.keys():
+		var node_data:Dictionary = scene_data[scene_data_key]["node_data"]
+		var node_data_keys_to_change := {}
+		for node_data_key in node_data:
+			if node_data_key.find("@") > -1:
+				node_data_keys_to_change[node_data_key] = node_data_key.replace("@", "_")
+			var node_data_dictionary:Dictionary = node_data[node_data_key]
+			var props_to_convert_keys = [
+				GameStateHelper.GAME_STATE_KEY_NODE_PATH,
+				GameStateHelper.GAME_STATE_KEY_OWNER_NODE_PATH]
+			for key in props_to_convert_keys:
+				if node_data_dictionary.has(key):
+					var value = node_data_dictionary[key]
+					var original_value = str(value)
+					var is_node_path = value is NodePath
+					value = str(value).replace("@", "_")
+					if original_value == value:
+						continue
+					print("updating node data for %s: '%s' -> '%s'" % [key, original_value, value])
+					if is_node_path:
+						value = NodePath(value)
+					node_data_dictionary[key] = value
+		for key in node_data_keys_to_change.keys():
+			print("GameStateService: updating node data key : '%s' -> '%s'" % [key, node_data_keys_to_change[key]])
+			node_data[node_data_keys_to_change[key]] = node_data[key]
+			node_data.erase(key)
+	print("conversion for save game data from pre v1 to v1 complete")
+	
 

@@ -80,7 +80,7 @@ Saves property values from it's parent to the given data dictionary
 """
 func save_data(data: Dictionary) -> void:
 	var parent = get_parent()
-	var id = str(parent.get_path())
+	var id = GameStateHelper.get_id(parent)
 
 	var node_data := {}
 	if global:
@@ -154,6 +154,11 @@ func set_data(node_data: Dictionary) -> void:
 	emit_signal("loading_data", node_data)
 
 
+
+static func get_id(node:Node) -> String:
+	return str(node.get_path()).replace("@", "_")
+
+
 """
 If parent exits the tree, let manager know so we save this fact in the save file
 """
@@ -161,8 +166,8 @@ func _exit_tree():
 	if dynamic_instance:
 		return
 	var parent = get_parent()
-	var id = str(parent.get_path())
-	var save_freed_object = SaveFreedInstancedChildScene.new(id, parent.get_path())
+	var id = GameStateHelper.get_id(parent)
+	var save_freed_object = SaveFreedInstancedChildScene.new(id, id)
 	
 	emit_signal("instanced_child_scene_freed", save_freed_object)
 
